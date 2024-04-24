@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
  */
 public class ActiveObjectCounterTests {
 
-	private final ActiveObjectCounter<Object> counter = new ActiveObjectCounter<Object>();
+	private final ActiveObjectCounter<Object> counter = new ActiveObjectCounter<>();
 
 	@Test
 	public void testActiveCount() {

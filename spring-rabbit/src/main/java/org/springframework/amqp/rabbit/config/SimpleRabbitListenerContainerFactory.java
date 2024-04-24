@@ -185,7 +185,7 @@ public class SimpleRabbitListenerContainerFactory
 		javaUtils
 			.acceptIfCondition(concurrency == null && this.concurrentConsumers != null, this.concurrentConsumers,
 				instance::setConcurrentConsumers)
-			.acceptIfCondition((concurrency == null || !(concurrency.contains("-")))
+			.acceptIfCondition((concurrency == null || !concurrency.contains("-"))
 					&& this.maxConcurrentConsumers != null,
 				this.maxConcurrentConsumers, instance::setMaxConcurrentConsumers)
 			.acceptIfNotNull(this.startConsumerMinInterval, instance::setStartConsumerMinInterval)

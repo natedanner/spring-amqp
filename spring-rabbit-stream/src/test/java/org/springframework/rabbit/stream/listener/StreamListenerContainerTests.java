@@ -57,7 +57,7 @@ public class StreamListenerContainerTests {
 		}
 		).given(builder).messageHandler(any());
 		AtomicBoolean advised = new AtomicBoolean();
-		MethodInterceptor advice = (inv) -> {
+		MethodInterceptor advice = inv -> {
 			advised.set(true);
 			return inv.proceed();
 		};

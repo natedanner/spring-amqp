@@ -143,7 +143,7 @@ public class DirectMessageListenerContainerIntegrationTests {
 		cf.setUsername("junk");
 		DirectMessageListenerContainer dmlc = new DirectMessageListenerContainer(cf);
 		dmlc.setPossibleAuthenticationFailureFatal(true);
-		assertThatExceptionOfType(AmqpAuthenticationException.class).isThrownBy(() -> dmlc.start());
+		assertThatExceptionOfType(AmqpAuthenticationException.class).isThrownBy(dmlc::start);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -667,9 +667,8 @@ public class DirectMessageListenerContainerIntegrationTests {
 		cf.setApplicationContext(context);
 		DirectMessageListenerContainer container = new DirectMessageListenerContainer(cf);
 		final CountDownLatch latch = new CountDownLatch(1);
-		container.setMessageListener(m -> {
-			latch.countDown();
-		});
+		container.setMessageListener(m ->
+			latch.countDown());
 		container.setQueueNames(Q1);
 		container.setBeanName("stopAfterDestroy");
 		container.setIdleEventInterval(500);
@@ -688,9 +687,8 @@ public class DirectMessageListenerContainerIntegrationTests {
 		CachingConnectionFactory cf = new CachingConnectionFactory("localhost");
 		DirectMessageListenerContainer container = new DirectMessageListenerContainer(cf);
 		final CountDownLatch latch = new CountDownLatch(2);
-		container.setMessageListener(m -> {
-			latch.countDown();
-		});
+		container.setMessageListener(m ->
+			latch.countDown());
 		container.setQueueNames(Q1);
 		container.setBeanName("deferredAcks");
 		container.setMessagesPerAck(2);
@@ -805,9 +803,8 @@ public class DirectMessageListenerContainerIntegrationTests {
 		CountDownLatch latch1 = new CountDownLatch(1);
 		CachingConnectionFactory cf = new CachingConnectionFactory("localhost");
 		DirectMessageListenerContainer container = new DirectMessageListenerContainer(cf);
-		container.setMessageListener((ChannelAwareMessageListener) (msg, chan) -> {
-			latch1.await(10, TimeUnit.SECONDS);
-		});
+		container.setMessageListener((ChannelAwareMessageListener) (msg, chan) ->
+			latch1.await(10, TimeUnit.SECONDS));
 		RabbitTemplate template = new RabbitTemplate(cf);
 		try {
 			container.setQueueNames(Q3);
@@ -831,9 +828,7 @@ public class DirectMessageListenerContainerIntegrationTests {
 			});
 			CountDownLatch latch2 = new CountDownLatch(1);
 			long t1 = System.currentTimeMillis();
-			container.stop(() -> {
-				latch2.countDown();
-			});
+			container.stop(latch2::countDown);
 			latch1.countDown();
 			assertThat(System.currentTimeMillis() - t1).isLessThan(5_000L);
 			await().untilAsserted(() -> {

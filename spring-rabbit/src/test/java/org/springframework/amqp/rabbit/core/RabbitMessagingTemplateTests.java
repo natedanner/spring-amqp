@@ -216,7 +216,7 @@ public class RabbitMessagingTemplateTests {
 
 	@Test
 	public void convertAndSendPayloadAndHeaders() {
-		Map<String, Object> headers = new HashMap<String, Object>();
+		Map<String, Object> headers = new HashMap<>();
 		headers.put("foo", "bar");
 
 		messagingTemplate.convertAndSend("myQueue", (Object) "Hello", headers);
@@ -226,7 +226,7 @@ public class RabbitMessagingTemplateTests {
 
 	@Test
 	public void convertAndSendPayloadAndHeadersExchange() {
-		Map<String, Object> headers = new HashMap<String, Object>();
+		Map<String, Object> headers = new HashMap<>();
 		headers.put("foo", "bar");
 
 		messagingTemplate.convertAndSend("myExchange", "myQueue", "Hello", headers);

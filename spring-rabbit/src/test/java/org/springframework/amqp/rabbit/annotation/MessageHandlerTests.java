@@ -60,10 +60,10 @@ public class MessageHandlerTests {
 		Map<String, Method> methods = new HashMap<>();
 		ReflectionUtils.doWithMethods(Foo.class,
 				method -> methods.put(method.getName(), method),
-				method -> method.getName().equals("listen1"));
+				method -> "listen1".equals(method.getName()));
 		ReflectionUtils.doWithMethods(Foo.class,
 				method -> methods.put(method.getName(), method),
-				method -> method.getName().equals("listen2"));
+				method -> "listen2".equals(method.getName()));
 		InvocableHandlerMethod invMethod = factory.createInvocableHandlerMethod(foo, methods.get("listen1"));
 		List<GenericMessage<String>> messagingMessages = Collections.singletonList(new GenericMessage<>("foo"));
 		List<org.springframework.amqp.core.Message> amqpMessages = Collections.singletonList(

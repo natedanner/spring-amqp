@@ -185,7 +185,7 @@ public class ExampleRabbitListenerSpyAndCaptureTest {
 
 		@RabbitListener(id = "bar", queues = "#{queue2.name}")
 		public void foo(@Payload String foo, @SuppressWarnings("unused") @Header("amqp_receivedRoutingKey") String rk) {
-			if (!failed && foo.equals("ex")) {
+			if (!failed && "ex".equals(foo)) {
 				failed = true;
 				throw new IllegalArgumentException(foo);
 			}

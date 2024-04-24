@@ -64,7 +64,7 @@ public class MultiMethodRabbitListenerEndpoint extends MethodRabbitListenerEndpo
 
 	@Override
 	protected HandlerAdapter configureListenerAdapter(MessagingMessageListenerAdapter messageListener) {
-		List<InvocableHandlerMethod> invocableHandlerMethods = new ArrayList<InvocableHandlerMethod>();
+		List<InvocableHandlerMethod> invocableHandlerMethods = new ArrayList<>();
 		InvocableHandlerMethod defaultHandler = null;
 		for (Method method : this.methods) {
 			InvocableHandlerMethod handler = getMessageHandlerMethodFactory()

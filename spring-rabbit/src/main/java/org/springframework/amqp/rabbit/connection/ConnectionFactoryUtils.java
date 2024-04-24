@@ -68,7 +68,7 @@ public final class ConnectionFactoryUtils {
 		}
 		RabbitResourceHolder resourceHolder = (RabbitResourceHolder) TransactionSynchronizationManager
 				.getResource(connectionFactory);
-		return (resourceHolder != null && resourceHolder.containsChannel(channel));
+		return resourceHolder != null && resourceHolder.containsChannel(channel);
 	}
 
 	/**

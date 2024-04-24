@@ -163,7 +163,7 @@ class TemplateParser extends AbstractSingleBeanDefinitionParser {
 		BeanDefinition replyContainer = null;
 		Element childElement = null;
 		List<Element> childElements = DomUtils.getChildElementsByTagName(element, LISTENER_ELEMENT);
-		if (childElements.size() > 0) {
+		if (!childElements.isEmpty()) {
 			childElement = childElements.get(0);
 		}
 		if (childElement != null) {

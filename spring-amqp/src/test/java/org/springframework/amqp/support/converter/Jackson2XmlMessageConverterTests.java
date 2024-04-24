@@ -61,7 +61,7 @@ public class Jackson2XmlMessageConverterTests {
 		trade.setAccountName("Acct1");
 		trade.setBuyRequest(true);
 		trade.setOrderType("Market");
-		trade.setPrice(new BigDecimal(103.30));
+		trade.setPrice(BigDecimal.valueOf(103.30));
 		trade.setQuantity(100);
 		trade.setRequestId("R123");
 		trade.setTicker("VMW");
@@ -105,7 +105,7 @@ public class Jackson2XmlMessageConverterTests {
 	@Test
 	@SuppressWarnings("unchecked")
 	public void hashtable() {
-		Hashtable<String, String> hashtable = new Hashtable<String, String>();
+		Hashtable<String, String> hashtable = new Hashtable<>();
 		hashtable.put("TICKER", "VMW");
 		hashtable.put("PRICE", "103.2");
 
@@ -290,7 +290,7 @@ public class Jackson2XmlMessageConverterTests {
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + ((name == null) ? 0 : name.hashCode());
+			result = prime * result + (name == null ? 0 : name.hashCode());
 			return result;
 		}
 
@@ -345,8 +345,8 @@ public class Jackson2XmlMessageConverterTests {
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + ((foo == null) ? 0 : foo.hashCode());
-			result = prime * result + ((name == null) ? 0 : name.hashCode());
+			result = prime * result + (foo == null ? 0 : foo.hashCode());
+			result = prime * result + (name == null ? 0 : name.hashCode());
 			return result;
 		}
 

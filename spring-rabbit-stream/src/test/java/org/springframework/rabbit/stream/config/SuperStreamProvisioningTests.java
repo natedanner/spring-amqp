@@ -49,7 +49,7 @@ public class SuperStreamProvisioningTests extends AbstractTestContainerTests {
 		assertThat(declarables.getDeclarables()).hasSize(7);
 		cf.createConnection();
 		List<Queue> queues = declarables.getDeclarablesByType(Queue.class);
-		assertThat(queues).extracting(que -> que.getName()).contains("test-0", "test-1", "test-2");
+		assertThat(queues).extracting(Queue::getName).contains("test-0", "test-1", "test-2");
 		queues.forEach(que -> admin.deleteQueue(que.getName()));
 		declarables.getDeclarablesByType(DirectExchange.class).forEach(ex -> admin.deleteExchange(ex.getName()));
 	}

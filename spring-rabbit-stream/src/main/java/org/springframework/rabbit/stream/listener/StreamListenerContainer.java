@@ -251,7 +251,7 @@ public class StreamListenerContainer extends ObservableListenerContainer {
 	public boolean isRunning() {
 		this.lock.lock();
 		try {
-			return this.consumers.size() > 0;
+			return !this.consumers.isEmpty();
 		}
 		finally {
 			this.lock.unlock();
@@ -262,7 +262,7 @@ public class StreamListenerContainer extends ObservableListenerContainer {
 	public void start() {
 		this.lock.lock();
 		try {
-			if (this.consumers.size() == 0) {
+			if (this.consumers.isEmpty()) {
 				this.consumerCustomizer.accept(getListenerId(), this.builder);
 				if (this.simpleStream) {
 					this.consumers.add(this.builder.build());

@@ -74,7 +74,7 @@ public class QueueBuilderTests {
 
 	@Test
 	public void addsMultipleArgumentsAtOnce() {
-		Map<String, Object> arguments = new HashMap<String, Object>();
+		Map<String, Object> arguments = new HashMap<>();
 		arguments.put("key1", "value1");
 		arguments.put("key2", "value2");
 

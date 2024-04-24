@@ -38,10 +38,10 @@ public class RabbitListenerContainerTestFactory implements RabbitListenerContain
 	private static final AtomicInteger counter = new AtomicInteger();
 
 	private final Map<String, MessageListenerTestContainer> listenerContainers =
-			new LinkedHashMap<String, MessageListenerTestContainer>();
+			new LinkedHashMap<>();
 
 	public List<MessageListenerTestContainer> getListenerContainers() {
-		return new ArrayList<MessageListenerTestContainer>(this.listenerContainers.values());
+		return new ArrayList<>(this.listenerContainers.values());
 	}
 
 	public MessageListenerTestContainer getListenerContainer(String id) {

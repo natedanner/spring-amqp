@@ -76,15 +76,13 @@ public abstract class NeedsManagementTests {
 	}
 
 	private URI queueUri(String queue) throws URISyntaxException {
-		URI uri = new URI(brokerRunning.getAdminUri())
+		return new URI(brokerRunning.getAdminUri())
 				.resolve("/api/queues/" + UriUtils.encodePathSegment("/", StandardCharsets.UTF_8) + "/" + queue);
-		return uri;
 	}
 
 	private URI exchangeUri(String queue) throws URISyntaxException {
-		URI uri = new URI(brokerRunning.getAdminUri())
+		return new URI(brokerRunning.getAdminUri())
 				.resolve("/api/exchanges/" + UriUtils.encodePathSegment("/", StandardCharsets.UTF_8) + "/" + queue);
-		return uri;
 	}
 
 	private WebClient createClient(String adminUser, String adminPassword) {

@@ -82,8 +82,8 @@ public class RabbitTemplateHeaderTests {
 
 		MessageProperties messageProperties = new MessageProperties();
 		Message message = new Message("Hello, world!".getBytes(), messageProperties);
-		final AtomicReference<String> replyTo = new AtomicReference<String>();
-		final AtomicReference<String> correlationId = new AtomicReference<String>();
+		final AtomicReference<String> replyTo = new AtomicReference<>();
+		final AtomicReference<String> correlationId = new AtomicReference<>();
 		willAnswer(invocation -> {
 			BasicProperties basicProps = invocation.getArgument(3);
 			replyTo.set(basicProps.getReplyTo());
@@ -137,8 +137,8 @@ public class RabbitTemplateHeaderTests {
 		messageProperties.setReplyTo("replyTo1");
 		messageProperties.setCorrelationId("saveThis");
 		Message message = new Message("Hello, world!".getBytes(), messageProperties);
-		final AtomicReference<String> replyTo = new AtomicReference<String>();
-		final AtomicReference<String> correlationId = new AtomicReference<String>();
+		final AtomicReference<String> replyTo = new AtomicReference<>();
+		final AtomicReference<String> correlationId = new AtomicReference<>();
 		willAnswer(invocation -> {
 			BasicProperties basicProps = invocation.getArgument(3);
 			replyTo.set(basicProps.getReplyTo());
@@ -184,8 +184,8 @@ public class RabbitTemplateHeaderTests {
 		messageProperties.setCorrelationId("a");
 		Message message = new Message("Hello, world!".getBytes(), messageProperties);
 		final AtomicInteger count = new AtomicInteger();
-		final List<String> nestedReplyTo = new ArrayList<String>();
-		final List<String> nestedCorrelation = new ArrayList<String>();
+		final List<String> nestedReplyTo = new ArrayList<>();
+		final List<String> nestedCorrelation = new ArrayList<>();
 		final String replyAddress3 = "replyTo3";
 		willAnswer(invocation -> {
 			BasicProperties basicProps = invocation.getArgument(3);
@@ -241,8 +241,8 @@ public class RabbitTemplateHeaderTests {
 		messageProperties.setReplyTo(replyTo1);
 		messageProperties.setCorrelationId("saveThis");
 		Message message = new Message("Hello, world!".getBytes(), messageProperties);
-		final AtomicReference<String> replyTo = new AtomicReference<String>();
-		final AtomicReference<String> correlationId = new AtomicReference<String>();
+		final AtomicReference<String> replyTo = new AtomicReference<>();
+		final AtomicReference<String> correlationId = new AtomicReference<>();
 		willAnswer(invocation -> {
 			BasicProperties basicProps = invocation.getArgument(3);
 			replyTo.set(basicProps.getReplyTo());
@@ -291,8 +291,8 @@ public class RabbitTemplateHeaderTests {
 		messageProperties.setCorrelationId("a");
 		Message message = new Message("Hello, world!".getBytes(), messageProperties);
 		final AtomicInteger count = new AtomicInteger();
-		final List<String> nestedReplyTo = new ArrayList<String>();
-		final List<String> nestedCorrelation = new ArrayList<String>();
+		final List<String> nestedReplyTo = new ArrayList<>();
+		final List<String> nestedCorrelation = new ArrayList<>();
 		final String replyTo3 = "replyTo3";
 		willAnswer(invocation -> {
 			BasicProperties basicProps = invocation.getArgument(3);

@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class MapBuilder<B extends MapBuilder<B, K, V>, K, V> {
 
-	private final Map<K, V> map = new HashMap<K, V>();
+	private final Map<K, V> map = new HashMap<>();
 
 	public B put(K key, V value) {
 		this.map.put(key, value);

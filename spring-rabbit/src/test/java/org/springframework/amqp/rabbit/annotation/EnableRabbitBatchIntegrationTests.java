@@ -150,7 +150,7 @@ public class EnableRabbitBatchIntegrationTests {
 			factory.setConnectionFactory(connectionFactory());
 			factory.setBatchListener(true);
 			factory.setContainerCustomizer(container -> {
-				if (container.getQueueNames()[0].equals("batch.4")) {
+				if ("batch.4".equals(container.getQueueNames()[0])) {
 					container.setDeBatchingEnabled(true);
 				}
 			});

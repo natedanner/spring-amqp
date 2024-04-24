@@ -206,7 +206,7 @@ public class RabbitMessagingTemplate extends AbstractMessagingTemplate<String>
 
 		Message<?> requestMessage = doConvert(request, headers, requestPostProcessor);
 		Message<?> replyMessage = sendAndReceive(exchange, routingKey, requestMessage);
-		return (replyMessage != null ? (T) getMessageConverter().fromMessage(replyMessage, targetClass) : null);
+		return replyMessage != null ? (T) getMessageConverter().fromMessage(replyMessage, targetClass) : null;
 	}
 
 	@Override

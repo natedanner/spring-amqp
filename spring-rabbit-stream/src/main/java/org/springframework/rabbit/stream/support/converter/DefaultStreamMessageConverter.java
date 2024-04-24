@@ -54,7 +54,7 @@ public class DefaultStreamMessageConverter implements StreamMessageConverter {
 	 * Construct an instance using a {@link WrapperMessageBuilder}.
 	 */
 	public DefaultStreamMessageConverter() {
-		this.builderSupplier = () -> new WrapperMessageBuilder();
+		this.builderSupplier = WrapperMessageBuilder::new;
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class DefaultStreamMessageConverter implements StreamMessageConverter {
 	 * @param codec the codec.
 	 */
 	public DefaultStreamMessageConverter(@Nullable Codec codec) {
-		this.builderSupplier = () -> codec.messageBuilder();
+		this.builderSupplier = codec::messageBuilder;
 	}
 
 	/**
@@ -106,9 +106,8 @@ public class DefaultStreamMessageConverter implements StreamMessageConverter {
 				.acceptIfNotNull(mProps.getReplyToGroupId(), propsBuilder::replyToGroupId);
 		ApplicationPropertiesBuilder appPropsBuilder = builder.applicationProperties();
 		if (mProps.getHeaders().size() > 0) {
-			mProps.getHeaders().forEach((key, val) -> {
-				mapProp(key, val, appPropsBuilder);
-			});
+			mProps.getHeaders().forEach((key, val) ->
+				mapProp(key, val, appPropsBuilder));
 		}
 		builder.addData(message.getBody());
 		return builder.build();

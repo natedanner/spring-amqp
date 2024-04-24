@@ -56,10 +56,10 @@ public final class SimpleResourceHolder {
 	private static final Log LOGGER = LogFactory.getLog(SimpleResourceHolder.class);
 
 	private static final ThreadLocal<Map<Object, Object>> RESOURCES =
-			new NamedThreadLocal<Map<Object, Object>>("Simple resources");
+			new NamedThreadLocal<>("Simple resources");
 
 	private static final ThreadLocal<Map<Object, Deque<Object>>> STACK =
-			new NamedThreadLocal<Map<Object, Deque<Object>>>("Simple resources");
+			new NamedThreadLocal<>("Simple resources");
 
 	/**
 	 * Return all resources that are bound to the current thread.
@@ -72,7 +72,7 @@ public final class SimpleResourceHolder {
 	 */
 	public static Map<Object, Object> getResources() {
 		Map<Object, Object> map = RESOURCES.get();
-		return (map != null ? Collections.unmodifiableMap(map) : Collections.emptyMap());
+		return map != null ? Collections.unmodifiableMap(map) : Collections.emptyMap();
 	}
 
 	/**
@@ -82,7 +82,7 @@ public final class SimpleResourceHolder {
 	 */
 	public static boolean has(Object key) {
 		Object value = doGet(key);
-		return (value != null);
+		return value != null;
 	}
 
 	/**
@@ -126,7 +126,7 @@ public final class SimpleResourceHolder {
 		Map<Object, Object> map = RESOURCES.get();
 		// set ThreadLocal Map if none found
 		if (map == null) {
-			map = new HashMap<Object, Object>();
+			map = new HashMap<>();
 			RESOURCES.set(map);
 		}
 		Object oldValue = map.put(key, value);
@@ -175,7 +175,7 @@ public final class SimpleResourceHolder {
 		Map<Object, Deque<Object>> stack = STACK.get();
 		if (stack != null) {
 			Deque<Object> deque = stack.get(key);
-			if (deque != null && deque.size() > 0) {
+			if (deque != null && !deque.isEmpty()) {
 				Object previousValue = deque.pop();
 				if (previousValue != null) {
 					bind(key, previousValue);

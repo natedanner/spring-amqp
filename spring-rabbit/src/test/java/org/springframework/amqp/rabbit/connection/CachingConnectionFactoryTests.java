@@ -453,7 +453,7 @@ public class CachingConnectionFactoryTests extends AbstractConnectionFactoryTest
 
 		final CountDownLatch latch2 = new CountDownLatch(1);
 		final CountDownLatch latch1 = new CountDownLatch(1);
-		final AtomicReference<Connection> connection = new AtomicReference<Connection>();
+		final AtomicReference<Connection> connection = new AtomicReference<>();
 		ccf.setChannelCheckoutTimeout(30000);
 		Executors.newSingleThreadExecutor().execute(() -> {
 			latch1.countDown();
@@ -577,7 +577,7 @@ public class CachingConnectionFactoryTests extends AbstractConnectionFactoryTest
 
 		final Connection con = ccf.createConnection();
 
-		final AtomicReference<Channel> channelOne = new AtomicReference<Channel>();
+		final AtomicReference<Channel> channelOne = new AtomicReference<>();
 		final CountDownLatch latch = new CountDownLatch(1);
 
 		new Thread(() -> {
@@ -703,9 +703,7 @@ public class CachingConnectionFactoryTests extends AbstractConnectionFactoryTest
 		given(mockConnection.isOpen()).willReturn(true);
 
 		AtomicBoolean open = new AtomicBoolean(true);
-		willAnswer(invoc -> {
-			return open.get();
-		}).given(mockChannel).isOpen();
+		willAnswer(invoc -> open.get()).given(mockChannel).isOpen();
 		given(mockChannel.getNextPublishSeqNo()).willReturn(1L);
 		willAnswer(invoc -> {
 			open.set(false); // so the logical close detects a closed delegate
@@ -1055,8 +1053,8 @@ public class CachingConnectionFactoryTests extends AbstractConnectionFactoryTest
 		given(mockConnection1.createChannel()).willReturn(mockChannel);
 		given(mockConnection2.createChannel()).willReturn(mockChannel);
 
-		final AtomicReference<Connection> created = new AtomicReference<Connection>();
-		final AtomicReference<Connection> closed = new AtomicReference<Connection>();
+		final AtomicReference<Connection> created = new AtomicReference<>();
+		final AtomicReference<Connection> closed = new AtomicReference<>();
 		final AtomicInteger timesClosed = new AtomicInteger(0);
 		AbstractConnectionFactory connectionFactory = createConnectionFactory(mockConnectionFactory);
 		connectionFactory.addConnectionListener(new ConnectionListener() {
@@ -1111,8 +1109,8 @@ public class CachingConnectionFactoryTests extends AbstractConnectionFactoryTest
 	public void testWithConnectionFactoryCachedConnection() throws Exception {
 		com.rabbitmq.client.ConnectionFactory mockConnectionFactory = mock(com.rabbitmq.client.ConnectionFactory.class);
 
-		final List<com.rabbitmq.client.Connection> mockConnections = new ArrayList<com.rabbitmq.client.Connection>();
-		final List<Channel> mockChannels = new ArrayList<Channel>();
+		final List<com.rabbitmq.client.Connection> mockConnections = new ArrayList<>();
+		final List<Channel> mockChannels = new ArrayList<>();
 
 		AtomicInteger connectionNumber = new AtomicInteger();
 		willAnswer(invocation -> {
@@ -1144,9 +1142,9 @@ public class CachingConnectionFactoryTests extends AbstractConnectionFactoryTest
 		assertThat(idleConnections).hasSize(0);
 
 		final AtomicReference<com.rabbitmq.client.Connection> createNotification =
-				new AtomicReference<com.rabbitmq.client.Connection>();
+				new AtomicReference<>();
 		final AtomicReference<com.rabbitmq.client.Connection> closedNotification =
-				new AtomicReference<com.rabbitmq.client.Connection>();
+				new AtomicReference<>();
 		ccf.setConnectionListeners(Collections.singletonList(new ConnectionListener() {
 
 			@Override
@@ -1305,8 +1303,8 @@ public class CachingConnectionFactoryTests extends AbstractConnectionFactoryTest
 	public void testWithConnectionFactoryCachedConnectionAndChannels() throws Exception {
 		com.rabbitmq.client.ConnectionFactory mockConnectionFactory = mock(com.rabbitmq.client.ConnectionFactory.class);
 
-		final List<com.rabbitmq.client.Connection> mockConnections = new ArrayList<com.rabbitmq.client.Connection>();
-		final List<Channel> mockChannels = new ArrayList<Channel>();
+		final List<com.rabbitmq.client.Connection> mockConnections = new ArrayList<>();
+		final List<Channel> mockChannels = new ArrayList<>();
 
 		AtomicInteger connectionNumber = new AtomicInteger();
 		willAnswer(invocation -> {
@@ -1343,9 +1341,9 @@ public class CachingConnectionFactoryTests extends AbstractConnectionFactoryTest
 				Map.class);
 
 		final AtomicReference<com.rabbitmq.client.Connection> createNotification =
-				new AtomicReference<com.rabbitmq.client.Connection>();
+				new AtomicReference<>();
 		final AtomicReference<com.rabbitmq.client.Connection> closedNotification =
-				new AtomicReference<com.rabbitmq.client.Connection>();
+				new AtomicReference<>();
 		ccf.setConnectionListeners(Collections.singletonList(new ConnectionListener() {
 
 			@Override
@@ -1518,8 +1516,8 @@ public class CachingConnectionFactoryTests extends AbstractConnectionFactoryTest
 	public void testWithConnectionFactoryCachedConnectionIdleAreClosed() throws Exception {
 		com.rabbitmq.client.ConnectionFactory mockConnectionFactory = mock(com.rabbitmq.client.ConnectionFactory.class);
 
-		final List<com.rabbitmq.client.Connection> mockConnections = new ArrayList<com.rabbitmq.client.Connection>();
-		final List<Channel> mockChannels = new ArrayList<Channel>();
+		final List<com.rabbitmq.client.Connection> mockConnections = new ArrayList<>();
+		final List<Channel> mockChannels = new ArrayList<>();
 
 		AtomicInteger connectionNumber = new AtomicInteger();
 		willAnswer(invocation -> {

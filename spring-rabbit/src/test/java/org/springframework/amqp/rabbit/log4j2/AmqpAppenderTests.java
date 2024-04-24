@@ -219,7 +219,7 @@ public class AmqpAppenderTests {
 
 		assertThat(events.getClass()).isEqualTo(LinkedBlockingQueue.class);
 		BlockingQueue<?> queue = (BlockingQueue<?>) events;
-		await().until(() -> queue.size() == 0);
+		await().until(queue::isEmpty);
 	}
 
 	@Test

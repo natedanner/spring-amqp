@@ -81,7 +81,7 @@ public abstract class LocallyTransactedTests {
 		given(mockConnectionFactory.newConnection(any(ExecutorService.class), anyString())).willReturn(mockConnection);
 		given(mockConnection.isOpen()).willReturn(true);
 
-		final AtomicReference<Exception> tooManyChannels = new AtomicReference<Exception>();
+		final AtomicReference<Exception> tooManyChannels = new AtomicReference<>();
 
 		AtomicBoolean done = new AtomicBoolean();
 		willAnswer(invocation -> {
@@ -94,7 +94,7 @@ public abstract class LocallyTransactedTests {
 			return channel;
 		}).given(mockConnection).createChannel();
 
-		final AtomicReference<Consumer> consumer = new AtomicReference<Consumer>();
+		final AtomicReference<Consumer> consumer = new AtomicReference<>();
 		final CountDownLatch consumerLatch = new CountDownLatch(1);
 
 		willAnswer(invocation -> {
@@ -115,9 +115,7 @@ public abstract class LocallyTransactedTests {
 			rollbackLatch.get().countDown();
 			return null;
 		}).given(onlyChannel).txRollback();
-		willAnswer(invocation -> {
-			return null;
-		}).given(onlyChannel).basicAck(anyLong(), anyBoolean());
+		willAnswer(invocation -> null).given(onlyChannel).basicAck(anyLong(), anyBoolean());
 
 		final CountDownLatch latch = new CountDownLatch(1);
 		AbstractMessageListenerContainer container = createContainer(cachingConnectionFactory);
@@ -210,11 +208,11 @@ public abstract class LocallyTransactedTests {
 		given(mockConnectionFactory.newConnection(any(ExecutorService.class), anyString())).willReturn(mockConnection);
 		given(mockConnection.isOpen()).willReturn(true);
 
-		final AtomicReference<Exception> tooManyChannels = new AtomicReference<Exception>();
+		final AtomicReference<Exception> tooManyChannels = new AtomicReference<>();
 
 		willAnswer(invocation -> channel).given(mockConnection).createChannel();
 
-		final AtomicReference<Consumer> consumer = new AtomicReference<Consumer>();
+		final AtomicReference<Consumer> consumer = new AtomicReference<>();
 		final CountDownLatch consumerLatch = new CountDownLatch(1);
 
 		willAnswer(invocation -> {
@@ -279,7 +277,7 @@ public abstract class LocallyTransactedTests {
 		Channel channel2 = mock(Channel.class);
 		given(channel2.isOpen()).willReturn(true);
 
-		final AtomicReference<Exception> tooManyChannels = new AtomicReference<Exception>();
+		final AtomicReference<Exception> tooManyChannels = new AtomicReference<>();
 
 		willAnswer(new Answer<Channel>() {
 
@@ -301,7 +299,7 @@ public abstract class LocallyTransactedTests {
 			}
 		}).given(mockConnection).createChannel();
 
-		final AtomicReference<Consumer> consumer = new AtomicReference<Consumer>();
+		final AtomicReference<Consumer> consumer = new AtomicReference<>();
 		final CountDownLatch consumerLatch = new CountDownLatch(1);
 
 		willAnswer(invocation -> {
@@ -377,7 +375,7 @@ public abstract class LocallyTransactedTests {
 		given(mockConnectionFactory.newConnection(any(ExecutorService.class), anyString())).willReturn(mockConnection);
 		given(mockConnection.isOpen()).willReturn(true);
 
-		final AtomicReference<Exception> tooManyChannels = new AtomicReference<Exception>();
+		final AtomicReference<Exception> tooManyChannels = new AtomicReference<>();
 
 		willAnswer(new Answer<Channel>() {
 			boolean done;
@@ -394,7 +392,7 @@ public abstract class LocallyTransactedTests {
 			}
 		}).given(mockConnection).createChannel();
 
-		final AtomicReference<Consumer> consumer = new AtomicReference<Consumer>();
+		final AtomicReference<Consumer> consumer = new AtomicReference<>();
 		final CountDownLatch consumerLatch = new CountDownLatch(1);
 
 		willAnswer(invocation -> {
@@ -412,7 +410,7 @@ public abstract class LocallyTransactedTests {
 		}).given(onlyChannel).txCommit();
 
 		final CountDownLatch latch = new CountDownLatch(1);
-		final AtomicReference<Channel> exposed = new AtomicReference<Channel>();
+		final AtomicReference<Channel> exposed = new AtomicReference<>();
 		AbstractMessageListenerContainer container = createContainer(singleConnectionFactory);
 		container.setMessageListener((ChannelAwareMessageListener) (message, channel) -> {
 			exposed.set(channel);
@@ -473,7 +471,7 @@ public abstract class LocallyTransactedTests {
 		given(mockConnectionFactory.newConnection(any(ExecutorService.class), anyString())).willReturn(mockConnection);
 		given(mockConnection.isOpen()).willReturn(true);
 
-		final AtomicReference<Exception> tooManyChannels = new AtomicReference<Exception>();
+		final AtomicReference<Exception> tooManyChannels = new AtomicReference<>();
 
 		AtomicBoolean done = new AtomicBoolean();
 		willAnswer(invocation -> {
@@ -483,7 +481,7 @@ public abstract class LocallyTransactedTests {
 			return secondChannel;
 		}).given(mockConnection).createChannel();
 
-		final AtomicReference<Consumer> consumer = new AtomicReference<Consumer>();
+		final AtomicReference<Consumer> consumer = new AtomicReference<>();
 		final CountDownLatch consumerLatch = new CountDownLatch(1);
 
 		willAnswer(invocation -> {
@@ -500,7 +498,7 @@ public abstract class LocallyTransactedTests {
 		}).given(firstChannel).txCommit();
 
 		final CountDownLatch latch = new CountDownLatch(1);
-		final AtomicReference<Channel> exposed = new AtomicReference<Channel>();
+		final AtomicReference<Channel> exposed = new AtomicReference<>();
 		AbstractMessageListenerContainer container = createContainer(singleConnectionFactory);
 		container.setMessageListener((ChannelAwareMessageListener) (message, channel) -> {
 			exposed.set(channel);

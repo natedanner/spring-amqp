@@ -34,7 +34,7 @@ import org.springframework.core.Ordered;
  */
 public class DelegatingDecompressingPostProcessor implements MessagePostProcessor, Ordered {
 
-	private final Map<String, MessagePostProcessor> decompressors = new HashMap<String, MessagePostProcessor>();
+	private final Map<String, MessagePostProcessor> decompressors = new HashMap<>();
 
 	private int order;
 

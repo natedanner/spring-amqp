@@ -204,7 +204,7 @@ public class RabbitTemplateTests {
 
 		given(mockChannel.queueDeclare()).willReturn(new AMQImpl.Queue.DeclareOk("foo", 0, 0));
 
-		final AtomicReference<Consumer> consumer = new AtomicReference<Consumer>();
+		final AtomicReference<Consumer> consumer = new AtomicReference<>();
 		willAnswer(invocation -> {
 			consumer.set(invocation.getArgument(6));
 			return null;
@@ -354,7 +354,7 @@ public class RabbitTemplateTests {
 	public void testNoListenerAllowed1() {
 		RabbitTemplate template = new RabbitTemplate();
 		assertThatIllegalStateException()
-			.isThrownBy(() -> template.expectedQueueNames());
+			.isThrownBy(template::expectedQueueNames);
 	}
 
 	@Test
@@ -362,10 +362,10 @@ public class RabbitTemplateTests {
 		RabbitTemplate template = new RabbitTemplate();
 		template.setReplyAddress(Address.AMQ_RABBITMQ_REPLY_TO);
 		assertThatIllegalStateException()
-			.isThrownBy(() -> template.expectedQueueNames());
+			.isThrownBy(template::expectedQueueNames);
 	}
 
-	public final static AtomicInteger LOOKUP_KEY_COUNT = new AtomicInteger();
+	public static final AtomicInteger LOOKUP_KEY_COUNT = new AtomicInteger();
 
 	@Test
 	@SuppressWarnings("unchecked")
@@ -379,7 +379,7 @@ public class RabbitTemplateTests {
 		org.springframework.amqp.rabbit.connection.ConnectionFactory connectionFactory4 =
 				mock(org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
 		Map<Object, org.springframework.amqp.rabbit.connection.ConnectionFactory> factories =
-				new HashMap<Object, org.springframework.amqp.rabbit.connection.ConnectionFactory>(2);
+				new HashMap<>(2);
 		factories.put("foo", connectionFactory1);
 		factories.put("bar", connectionFactory2);
 		factories.put("baz", connectionFactory3);
@@ -449,12 +449,10 @@ public class RabbitTemplateTests {
 		admin.setApplicationContext(ac);
 		admin.afterPropertiesSet();
 		AtomicReference<Channel> templateChannel = new AtomicReference<>();
-		new TransactionTemplate(new TestTransactionManager()).execute(s -> {
-			return rabbitTemplate.execute(c -> {
+		new TransactionTemplate(new TestTransactionManager()).execute(s -> rabbitTemplate.execute(c -> {
 				templateChannel.set(((ChannelProxy) c).getTargetChannel());
 				return true;
-			});
-		});
+			}));
 		verify(channel1).txSelect();
 		verify(channel1).queueDeclare(anyString(), anyBoolean(), anyBoolean(), anyBoolean(), anyMap());
 		assertThat(templateChannel.get()).isEqualTo(channel1);
@@ -604,7 +602,7 @@ public class RabbitTemplateTests {
 				}));
 		assertThat(TransactionSynchronizationManager.hasResource(connectionFactory)).isFalse();
 		assertThatIllegalStateException()
-			.isThrownBy(() -> (TransactionSynchronizationManager.getSynchronizations()).isEmpty())
+			.isThrownBy((TransactionSynchronizationManager.getSynchronizations())::isEmpty)
 			.withMessage("Transaction synchronization is not active");
 	}
 
@@ -631,10 +629,10 @@ public class RabbitTemplateTests {
 		});
 		assertThat(TransactionSynchronizationManager.hasResource(connectionFactory)).isFalse();
 		assertThatIllegalStateException()
-			.isThrownBy(() -> (TransactionSynchronizationManager.getSynchronizations()).isEmpty())
+			.isThrownBy((TransactionSynchronizationManager.getSynchronizations())::isEmpty)
 			.withMessage("Transaction synchronization is not active");
 		assertThatExceptionOfType(AfterCompletionFailedException.class)
-			.isThrownBy(() -> ConnectionFactoryUtils.checkAfterCompletion());
+			.isThrownBy(ConnectionFactoryUtils::checkAfterCompletion);
 		ConnectionFactoryUtils.enableAfterCompletionFailureCapture(false);
 	}
 

@@ -156,7 +156,7 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 
 	private boolean redeclareManualDeclarations;
 
-	private volatile boolean running = false;
+	private volatile boolean running;
 
 	private volatile DeclarationExceptionEvent lastDeclarationExceptionEvent;
 
@@ -771,7 +771,7 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 
 		Collection<Declarables> declarables = this.applicationContext.getBeansOfType(Declarables.class, false, true)
 				.values();
-		declarables.forEach(d -> {
+		declarables.forEach(d ->
 			d.getDeclarables().forEach(declarable -> {
 				if (declarable instanceof Exchange exch) {
 					contextExchanges.add(exch);
@@ -782,8 +782,7 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 				else if (declarable instanceof Binding binding) {
 					contextBindings.add(binding);
 				}
-			});
-		});
+			}));
 	}
 
 	/**

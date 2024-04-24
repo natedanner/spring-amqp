@@ -105,17 +105,17 @@ public class SimpleTrade {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((accountName == null) ? 0 : accountName.hashCode());
+				+ (accountName == null ? 0 : accountName.hashCode());
 		result = prime * result + (buyRequest ? 1231 : 1237);
 		result = prime * result
-				+ ((orderType == null) ? 0 : orderType.hashCode());
-		result = prime * result + ((price == null) ? 0 : price.hashCode());
+				+ (orderType == null ? 0 : orderType.hashCode());
+		result = prime * result + (price == null ? 0 : price.hashCode());
 		result = prime * result + (int) (quantity ^ (quantity >>> 32));
 		result = prime * result
-				+ ((requestId == null) ? 0 : requestId.hashCode());
-		result = prime * result + ((ticker == null) ? 0 : ticker.hashCode());
+				+ (requestId == null ? 0 : requestId.hashCode());
+		result = prime * result + (ticker == null ? 0 : ticker.hashCode());
 		result = prime * result
-				+ ((userName == null) ? 0 : userName.hashCode());
+				+ (userName == null ? 0 : userName.hashCode());
 		return result;
 	}
 

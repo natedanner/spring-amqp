@@ -104,16 +104,14 @@ public class BatchMessagingMessageListenerAdapter extends MessagingMessageListen
 
 			if (this.converterAdapter.isMessageList()) {
 				List<Message<?>> messages = new ArrayList<>();
-				this.batchingStrategy.deBatch(amqpMessage, fragment -> {
-					messages.add(super.toMessagingMessage(fragment));
-				});
+				this.batchingStrategy.deBatch(amqpMessage, fragment ->
+					messages.add(super.toMessagingMessage(fragment)));
 				return new GenericMessage<>(messages);
 			}
 			else {
 				List<Object> list = new ArrayList<>();
-				this.batchingStrategy.deBatch(amqpMessage, fragment -> {
-					list.add(this.converterAdapter.extractPayload(fragment));
-				});
+				this.batchingStrategy.deBatch(amqpMessage, fragment ->
+					list.add(this.converterAdapter.extractPayload(fragment)));
 				return MessageBuilder.withPayload(list)
 						.copyHeaders(this.converterAdapter
 								.getHeaderMapper()

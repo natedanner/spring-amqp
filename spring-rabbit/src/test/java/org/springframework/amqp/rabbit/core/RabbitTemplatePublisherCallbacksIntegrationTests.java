@@ -159,7 +159,7 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests {
 	public void testPublisherConfirmReceived() throws Exception {
 		final CountDownLatch latch = new CountDownLatch(10000);
 		final AtomicInteger acks = new AtomicInteger();
-		final AtomicReference<CorrelationData> confirmCorrelation = new AtomicReference<CorrelationData>();
+		final AtomicReference<CorrelationData> confirmCorrelation = new AtomicReference<>();
 		AtomicReference<String> callbackThreadName = new AtomicReference<>();
 		this.templateWithConfirmsEnabled.setConfirmCallback((correlationData, ack, cause) -> {
 			acks.incrementAndGet();
@@ -290,7 +290,7 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests {
 	public void testPublisherReturns() throws Exception {
 		final CountDownLatch latch = new CountDownLatch(1);
 		final List<Message> returns = new ArrayList<>();
-		templateWithReturnsEnabled.setReturnsCallback((returned) -> {
+		templateWithReturnsEnabled.setReturnsCallback(returned -> {
 			returns.add(returned.getMessage());
 			latch.countDown();
 		});
@@ -306,7 +306,7 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests {
 	public void testPublisherReturnsWithMandatoryExpression() throws Exception {
 		final CountDownLatch latch = new CountDownLatch(1);
 		final List<Message> returns = new ArrayList<>();
-		templateWithReturnsEnabled.setReturnsCallback((returned) -> {
+		templateWithReturnsEnabled.setReturnsCallback(returned -> {
 			returns.add(returned.getMessage());
 			latch.countDown();
 		});
@@ -421,7 +421,7 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests {
 		Collection<CorrelationData> unconfirmed = template.getUnconfirmed(-1);
 		assertThat(unconfirmed).hasSize(2);
 		assertThat(template.getUnconfirmedCount()).isEqualTo(0);
-		Set<String> ids = new HashSet<String>();
+		Set<String> ids = new HashSet<>();
 		Iterator<CorrelationData> iterator = unconfirmed.iterator();
 		ids.add(iterator.next().getId());
 		ids.add(iterator.next().getId());
@@ -867,7 +867,7 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests {
 		AtomicBoolean resent = new AtomicBoolean();
 		AtomicReference<String> callbackThreadName = new AtomicReference<>();
 		CountDownLatch callbackLatch = new CountDownLatch(1);
-		this.templateWithConfirmsAndReturnsEnabled.setReturnsCallback((returned) -> {
+		this.templateWithConfirmsAndReturnsEnabled.setReturnsCallback(returned -> {
 			this.templateWithConfirmsAndReturnsEnabled.send(ROUTE, returned.getMessage());
 			callbackThreadName.set(Thread.currentThread().getName());
 			resent.set(true);
@@ -886,9 +886,8 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests {
 	void justReturns() throws InterruptedException {
 		CorrelationData correlationData = new CorrelationData();
 		CountDownLatch latch = new CountDownLatch(1);
-		this.templateWithReturnsEnabled.setReturnsCallback(returned -> {
-			latch.countDown();
-		});
+		this.templateWithReturnsEnabled.setReturnsCallback(returned ->
+			latch.countDown());
 		this.templateWithReturnsEnabled.setConfirmCallback((correlationData1, ack, cause) -> {
 			// has callback but factory is not enabled
 		});

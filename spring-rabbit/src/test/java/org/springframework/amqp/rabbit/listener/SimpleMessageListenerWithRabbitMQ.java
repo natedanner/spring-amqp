@@ -38,7 +38,7 @@ import org.springframework.beans.DirectFieldAccessor;
 
 public final class SimpleMessageListenerWithRabbitMQ {
 
-	private static Log logger = LogFactory.getLog(SimpleMessageListenerWithRabbitMQ.class);
+	private static final Log logger = LogFactory.getLog(SimpleMessageListenerWithRabbitMQ.class);
 
 
 	private SimpleMessageListenerWithRabbitMQ() {
@@ -98,7 +98,7 @@ public final class SimpleMessageListenerWithRabbitMQ {
 
 	private static List<BlockingQueue<?>> getQueues(SimpleMessageListenerContainer container) {
 		DirectFieldAccessor accessor = new DirectFieldAccessor(container);
-		List<BlockingQueue<?>> queues = new ArrayList<BlockingQueue<?>>();
+		List<BlockingQueue<?>> queues = new ArrayList<>();
 		@SuppressWarnings("unchecked")
 		Set<BlockingQueueConsumer> consumers = (Set<BlockingQueueConsumer>) accessor.getPropertyValue("consumers");
 		for (BlockingQueueConsumer consumer : consumers) {

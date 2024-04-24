@@ -316,12 +316,12 @@ public class RabbitListenerAnnotationBeanPostProcessor
 
 	private TypeMetadata buildMetadata(Class<?> targetClass) {
 		List<RabbitListener> classLevelListeners = findListenerAnnotations(targetClass);
-		final boolean hasClassLevelListeners = classLevelListeners.size() > 0;
+		final boolean hasClassLevelListeners = !classLevelListeners.isEmpty();
 		final List<ListenerMethod> methods = new ArrayList<>();
 		final List<Method> multiMethods = new ArrayList<>();
 		ReflectionUtils.doWithMethods(targetClass, method -> {
 			List<RabbitListener> listenerAnnotations = findListenerAnnotations(method);
-			if (listenerAnnotations.size() > 0) {
+			if (!listenerAnnotations.isEmpty()) {
 				methods.add(new ListenerMethod(method,
 						listenerAnnotations.toArray(new RabbitListener[listenerAnnotations.size()])));
 			}
@@ -363,7 +363,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 	private void processMultiMethodListeners(RabbitListener[] classLevelListeners, Method[] multiMethods,
 			Object bean, String beanName) {
 
-		List<Method> checkedMethods = new ArrayList<Method>();
+		List<Method> checkedMethods = new ArrayList<>();
 		Method defaultMethod = null;
 		for (Method method : multiMethods) {
 			Method checked = checkProxy(method, bean);
@@ -432,10 +432,10 @@ public class RabbitListenerAnnotationBeanPostProcessor
 		List<Object> resolvedQueues = resolveQueues(rabbitListener, declarables);
 		if (!resolvedQueues.isEmpty()) {
 			if (resolvedQueues.get(0) instanceof String) {
-				endpoint.setQueueNames(resolvedQueues.stream().map(o -> (String) o).toArray(String[]::new));
+				endpoint.setQueueNames(resolvedQueues.stream().map(String.class::cast).toArray(String[]::new));
 			}
 			else {
-				endpoint.setQueues(resolvedQueues.stream().map(o -> (Queue) o).toArray(Queue[]::new));
+				endpoint.setQueues(resolvedQueues.stream().map(Queue.class::cast).toArray(Queue[]::new));
 			}
 		}
 		endpoint.setConcurrency(resolveExpressionAsStringOrInteger(rabbitListener.concurrency(), "concurrency"));
@@ -680,15 +680,15 @@ public class RabbitListenerAnnotationBeanPostProcessor
 						"@RabbitListener can have only one of 'queues', 'queuesToDeclare', or 'bindings'");
 			}
 			return Arrays.stream(registerBeansForDeclaration(rabbitListener, declarables))
-					.map(s -> (Object) s)
+					.map(Object.class::cast)
 					.collect(Collectors.toList());
 		}
 		return queueNames.isEmpty()
 				? queueBeans.stream()
-						.map(s -> (Object) s)
+						.map(Object.class::cast)
 						.collect(Collectors.toList())
 				: queueNames.stream()
-						.map(s -> (Object) s)
+						.map(Object.class::cast)
 						.collect(Collectors.toList());
 
 	}
@@ -733,7 +733,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 	}
 
 	private String[] registerBeansForDeclaration(RabbitListener rabbitListener, Collection<Declarable> declarables) {
-		List<String> queues = new ArrayList<String>();
+		List<String> queues = new ArrayList<>();
 		if (this.beanFactory instanceof ConfigurableBeanFactory) {
 			for (QueueBinding binding : rabbitListener.bindings()) {
 				String queueName = declareQueue(binding.value(), declarables);

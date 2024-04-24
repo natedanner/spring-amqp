@@ -136,7 +136,7 @@ public class ConditionalRejectingErrorHandler implements ErrorHandler {
 				Message failed = lefe.getFailedMessage();
 				if (failed != null) {
 					List<Map<String, ?>> xDeath = failed.getMessageProperties().getXDeathHeader();
-					if (xDeath != null && xDeath.size() > 0) {
+					if (xDeath != null && !xDeath.isEmpty()) {
 						this.logger.error("x-death header detected on a message with a fatal exception; "
 								+ "perhaps requeued from a DLQ? - discarding: " + failed);
 						handleDiscarded(failed);
@@ -214,8 +214,7 @@ public class ConditionalRejectingErrorHandler implements ErrorHandler {
 		}
 
 		private boolean isCauseFatal(Throwable cause) {
-			return cause instanceof MessageConversionException // NOSONAR boolean complexity
-					|| cause instanceof org.springframework.messaging.converter.MessageConversionException
+			return cause instanceof MessageConversionException
 					|| cause instanceof MethodArgumentResolutionException
 					|| cause instanceof NoSuchMethodException
 					|| cause instanceof ClassCastException

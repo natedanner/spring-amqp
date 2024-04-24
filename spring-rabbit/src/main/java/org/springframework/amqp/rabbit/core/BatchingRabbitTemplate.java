@@ -99,7 +99,7 @@ public class BatchingRabbitTemplate extends RabbitTemplate {
 				}
 				Date next = this.batchingStrategy.nextRelease();
 				if (next != null) {
-					this.scheduledTask = this.scheduler.schedule((Runnable) () -> releaseBatches(), next.toInstant());
+					this.scheduledTask = this.scheduler.schedule((Runnable) this::releaseBatches, next.toInstant());
 				}
 			}
 		}

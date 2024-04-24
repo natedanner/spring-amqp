@@ -70,7 +70,7 @@ public class ConnnectionListenerTests {
 			}
 
 		});
-		assertThatExceptionOfType(AmqpIOException.class).isThrownBy(() -> cf.createConnection());
+		assertThatExceptionOfType(AmqpIOException.class).isThrownBy(cf::createConnection);
 		assertThat(failed.get()).isTrue();
 	}
 

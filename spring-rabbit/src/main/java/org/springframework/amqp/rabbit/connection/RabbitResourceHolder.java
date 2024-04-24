@@ -120,7 +120,7 @@ public class RabbitResourceHolder extends ResourceHolderSupport {
 			if (connection != null) {
 				List<Channel> channelsForConnection = this.channelsPerConnection.get(connection);
 				if (channelsForConnection == null) {
-					channelsForConnection = new LinkedList<Channel>();
+					channelsForConnection = new LinkedList<>();
 					this.channelsPerConnection.put(connection, channelsForConnection);
 				}
 				channelsForConnection.add(channel);
@@ -134,12 +134,12 @@ public class RabbitResourceHolder extends ResourceHolderSupport {
 
 	@Nullable
 	public Connection getConnection() {
-		return (!this.connections.isEmpty() ? this.connections.get(0) : null);
+		return this.connections.isEmpty() ? null : this.connections.get(0);
 	}
 
 	@Nullable
 	public Channel getChannel() {
-		return (!this.channels.isEmpty() ? this.channels.get(0) : null);
+		return this.channels.isEmpty() ? null : this.channels.get(0);
 	}
 
 	public void commitAll() throws AmqpException {

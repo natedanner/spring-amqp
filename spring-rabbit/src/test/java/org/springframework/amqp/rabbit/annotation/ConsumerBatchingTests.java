@@ -24,6 +24,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -81,7 +82,7 @@ public class ConsumerBatchingTests {
 		assertThat(this.listener.foosLatch.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(this.listener.foos).hasSize(8);
 		assertThat(this.listener.foos)
-			.extracting(foo -> foo.getBar())
+			.extracting(ConsumerBatchingTests.Foo::getBar)
 			.contains("foo", "bar", "baz", "qux", "foo", "bar", "baz", "qux");
 		Timer timer = await().until(() -> {
 			try {
@@ -96,7 +97,7 @@ public class ConsumerBatchingTests {
 			catch (@SuppressWarnings("unused") Exception e) {
 				return null;
 			}
-		}, tim -> tim != null);
+		}, Objects::nonNull);
 		assertThat(timer).isNotNull();
 		assertThat(timer.count()).isEqualTo(1L);
 		timer = this.meterRegistry.get("spring.rabbitmq.listener")
@@ -132,7 +133,7 @@ public class ConsumerBatchingTests {
 		assertThat(this.listener.dlqLatch.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(this.listener.dlqd).hasSize(4);
 		assertThat(this.listener.dlqd)
-			.extracting(foo -> foo.getBar())
+			.extracting(ConsumerBatchingTests.Foo::getBar)
 			.contains("foo", "bar", "baz", "qux");
 	}
 
@@ -145,7 +146,7 @@ public class ConsumerBatchingTests {
 		assertThat(this.listener.dlqHalfLatch.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(this.listener.dlqHalf).hasSize(2);
 		assertThat(this.listener.dlqHalf)
-			.extracting(foo -> foo.getBar())
+			.extracting(ConsumerBatchingTests.Foo::getBar)
 			.contains("baz", "qux");
 	}
 
@@ -162,7 +163,7 @@ public class ConsumerBatchingTests {
 			.contains("foo", "bar", "baz", "qux", "foo", "baz", "qux");
 		assertThat(this.listener.dlqOneRejectedLatch2.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(this.listener.dlqOneRejected)
-			.extracting(foo -> foo.getBar())
+			.extracting(ConsumerBatchingTests.Foo::getBar)
 			.contains("bar");
 	}
 

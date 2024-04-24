@@ -75,7 +75,7 @@ public class RabbitGatewaySupport implements InitializingBean {
 	 */
 	@Nullable
 	public final ConnectionFactory getConnectionFactory() {
-		return (this.rabbitOperations != null ? this.rabbitOperations.getConnectionFactory() : null);
+		return this.rabbitOperations != null ? this.rabbitOperations.getConnectionFactory() : null;
 	}
 
 	/**

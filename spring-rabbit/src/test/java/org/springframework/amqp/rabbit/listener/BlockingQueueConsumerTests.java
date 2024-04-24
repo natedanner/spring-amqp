@@ -255,7 +255,7 @@ public class BlockingQueueConsumerTests {
 			Channel channel, BlockingQueueConsumer blockingQueueConsumer) throws Exception {
 		DirectFieldAccessor dfa = new DirectFieldAccessor(blockingQueueConsumer);
 		dfa.setPropertyValue("channel", channel);
-		Set<Long> deliveryTags = new HashSet<Long>();
+		Set<Long> deliveryTags = new HashSet<>();
 		deliveryTags.add(1L);
 		dfa.setPropertyValue("deliveryTags", deliveryTags);
 		blockingQueueConsumer.rollbackOnExceptionIfNecessary(ex);

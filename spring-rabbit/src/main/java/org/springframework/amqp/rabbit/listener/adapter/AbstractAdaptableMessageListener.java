@@ -91,9 +91,9 @@ public abstract class AbstractAdaptableMessageListener implements ChannelAwareMe
 
 	private String responseRoutingKey = DEFAULT_RESPONSE_ROUTING_KEY;
 
-	private String responseExchange = null;
+	private String responseExchange;
 
-	private Address responseAddress = null;
+	private Address responseAddress;
 
 	private Expression responseExpression;
 

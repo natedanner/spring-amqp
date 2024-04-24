@@ -52,9 +52,8 @@ public class ListenerContainerFactoryBeanTests {
 	void smlcCustomizer() throws Exception {
 		ListenerContainerFactoryBean lcfb = new ListenerContainerFactoryBean();
 		lcfb.setConnectionFactory(mock(ConnectionFactory.class));
-		lcfb.setSMLCCustomizer(container -> {
-			container.setConsumerStartTimeout(42L);
-		});
+		lcfb.setSMLCCustomizer(container ->
+			container.setConsumerStartTimeout(42L));
 		lcfb.afterPropertiesSet();
 		AbstractMessageListenerContainer container = lcfb.getObject();
 		assertThat(TestUtils.getPropertyValue(container, "consumerStartTimeout", Long.class)).isEqualTo(42L);
@@ -65,9 +64,8 @@ public class ListenerContainerFactoryBeanTests {
 		ListenerContainerFactoryBean lcfb = new ListenerContainerFactoryBean();
 		lcfb.setConnectionFactory(mock(ConnectionFactory.class));
 		lcfb.setType(Type.direct);
-		lcfb.setDMLCCustomizer(container -> {
-			container.setConsumersPerQueue(2);
-		});
+		lcfb.setDMLCCustomizer(container ->
+			container.setConsumersPerQueue(2));
 		lcfb.afterPropertiesSet();
 		AbstractMessageListenerContainer container = lcfb.getObject();
 		assertThat(TestUtils.getPropertyValue(container, "consumersPerQueue", Integer.class)).isEqualTo(2);

@@ -119,7 +119,7 @@ public class RemoteInvocationResult implements Serializable {
 	 * @see #getException
 	 */
 	public boolean hasException() {
-		return (this.exception != null);
+		return this.exception != null;
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class RemoteInvocationResult implements Serializable {
 	 * @see #hasException()
 	 */
 	public boolean hasInvocationTargetException() {
-		return (this.exception instanceof InvocationTargetException);
+		return this.exception instanceof InvocationTargetException;
 	}
 
 

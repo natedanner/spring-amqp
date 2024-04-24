@@ -87,7 +87,7 @@ public class RabbitListenerEndpointRegistrarTests {
 		registrar.registerEndpoint(endpoint, null);
 
 		assertThatIllegalStateException()
-			.isThrownBy(() -> registrar.afterPropertiesSet())
+			.isThrownBy(registrar::afterPropertiesSet)
 			.withMessageContaining(endpoint.toString());
 	}
 

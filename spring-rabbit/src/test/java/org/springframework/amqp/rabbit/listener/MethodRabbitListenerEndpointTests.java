@@ -383,7 +383,7 @@ public class MethodRabbitListenerEndpointTests {
 
 		// Message<String> as Message<Integer>
 		assertThatThrownBy(() -> listener.onMessage(MessageTestUtils.createTextMessage("test"), channel))
-			.extracting(t -> t.getCause())
+			.extracting(Throwable::getCause)
 			.isInstanceOfAny(MethodArgumentTypeMismatchException.class,
 					org.springframework.messaging.converter.MessageConversionException.class);
 	}
@@ -451,7 +451,7 @@ public class MethodRabbitListenerEndpointTests {
 
 	static class RabbitEndpointSampleBean {
 
-		private final Map<String, Boolean> invocations = new HashMap<String, Boolean>();
+		private final Map<String, Boolean> invocations = new HashMap<>();
 
 		public void resolveMessageAndSession(org.springframework.amqp.core.Message message, Channel channel) {
 			invocations.put("resolveMessageAndSession", true);

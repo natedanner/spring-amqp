@@ -148,7 +148,7 @@ public class Message implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + Arrays.hashCode(this.body);
-		result = prime * result + ((this.messageProperties == null) ? 0 : this.messageProperties.hashCode());
+		result = prime * result + (this.messageProperties == null ? 0 : this.messageProperties.hashCode());
 		return result;
 	}
 

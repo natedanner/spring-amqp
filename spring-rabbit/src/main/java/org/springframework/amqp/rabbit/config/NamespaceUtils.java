@@ -96,7 +96,7 @@ public abstract class NamespaceUtils {
 	 */
 	public static boolean isAttributeDefined(Element element, String attributeName) {
 		String value = element.getAttribute(attributeName);
-		return (StringUtils.hasText(value));
+		return StringUtils.hasText(value);
 	}
 
 	/**
@@ -249,7 +249,7 @@ public abstract class NamespaceUtils {
 		String admins = element.getAttribute("declared-by");
 		if (StringUtils.hasText(admins)) {
 			String[] adminBeanNames = admins.split(",");
-			ManagedList<BeanReference> adminBeanRefs = new ManagedList<BeanReference>();
+			ManagedList<BeanReference> adminBeanRefs = new ManagedList<>();
 			for (String adminBeanName : adminBeanNames) {
 				adminBeanRefs.add(new RuntimeBeanReference(adminBeanName.trim()));
 			}

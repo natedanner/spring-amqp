@@ -157,7 +157,7 @@ public class AmqpAppender extends AppenderBase<ILoggingEvent> {
 	/**
 	 * Configuration arbitrary application ID.
 	 */
-	private String applicationId = null;
+	private String applicationId;
 
 	/**
 	 * Where LoggingEvents are queued to send.
@@ -167,7 +167,7 @@ public class AmqpAppender extends AppenderBase<ILoggingEvent> {
 	/**
 	 * The pool of senders.
 	 */
-	private ExecutorService senderPool = null;
+	private ExecutorService senderPool;
 
 	/**
 	 * How many senders to use at once. Use more senders if you have lots of log output going through this appender.
@@ -298,12 +298,12 @@ public class AmqpAppender extends AppenderBase<ILoggingEvent> {
 	/**
 	 * Default content-encoding of log messages.
 	 */
-	private String contentEncoding = null;
+	private String contentEncoding;
 
 	/**
 	 * Whether or not to try and declare the configured exchange when this appender starts.
 	 */
-	private boolean declareExchange = false;
+	private boolean declareExchange;
 
 	/**
 	 * charset to use when converting String to byte[], default null (system default charset used).
@@ -321,12 +321,12 @@ public class AmqpAppender extends AppenderBase<ILoggingEvent> {
 
 	private MessageDeliveryMode deliveryMode = MessageDeliveryMode.PERSISTENT;
 
-	private boolean autoDelete = false;
+	private boolean autoDelete;
 
 	/**
 	 * Used to determine whether {@link MessageProperties#setMessageId(String)} is set.
 	 */
-	private boolean generateId = false;
+	private boolean generateId;
 
 	private Layout<ILoggingEvent> layout;
 

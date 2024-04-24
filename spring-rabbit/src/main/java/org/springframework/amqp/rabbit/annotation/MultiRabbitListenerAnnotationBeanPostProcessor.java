@@ -96,7 +96,7 @@ public class MultiRabbitListenerAnnotationBeanPostProcessor extends RabbitListen
 		@Override
 		public Object invoke(final Object proxy, final Method method, final Object[] args)
 				throws InvocationTargetException, IllegalAccessException {
-			if (method.getName().equals("admin")) {
+			if ("admin".equals(method.getName())) {
 				return this.admin;
 			}
 			return method.invoke(this.target, args);

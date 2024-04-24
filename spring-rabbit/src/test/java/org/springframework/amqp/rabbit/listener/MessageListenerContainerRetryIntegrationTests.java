@@ -206,14 +206,12 @@ public class MessageListenerContainerRetryIntegrationTests {
 			factory = new StatelessRetryOperationsInterceptorFactoryBean();
 		}
 		if (listRecoverer) {
-			factory.setMessageRecoverer((MessageBatchRecoverer) (messages, cause) -> {
-				latch.countDown();
-			});
+			factory.setMessageRecoverer((MessageBatchRecoverer) (messages, cause) ->
+				latch.countDown());
 		}
 		else {
-			factory.setMessageRecoverer((message, cause) -> {
-				latch.countDown();
-			});
+			factory.setMessageRecoverer((message, cause) ->
+				latch.countDown());
 		}
 		if (retryTemplate == null) {
 			retryTemplate = new RetryTemplate();

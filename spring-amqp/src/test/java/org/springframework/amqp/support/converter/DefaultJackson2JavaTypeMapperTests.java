@@ -244,7 +244,7 @@ public class DefaultJackson2JavaTypeMapperTests {
 	}
 
 	private Map<String, Class<?>> map(String string, Class<?> clazz) {
-		Map<String, Class<?>> map = new HashMap<String, Class<?>>();
+		Map<String, Class<?>> map = new HashMap<>();
 		map.put(string, clazz);
 		return map;
 	}

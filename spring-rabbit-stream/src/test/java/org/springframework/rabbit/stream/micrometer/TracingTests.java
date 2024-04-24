@@ -112,9 +112,8 @@ public class TracingTests extends SampleTestRunner {
 
 		@Bean
 		StreamAdmin streamAdmin(Environment env) {
-			StreamAdmin streamAdmin = new StreamAdmin(env, sc -> {
-				sc.stream("trace.stream.queue1").create();
-			});
+			StreamAdmin streamAdmin = new StreamAdmin(env, sc ->
+				sc.stream("trace.stream.queue1").create());
 			streamAdmin.setAutoStartup(false);
 			return streamAdmin;
 		}
@@ -163,11 +162,10 @@ public class TracingTests extends SampleTestRunner {
 		RabbitListenerContainerFactory<StreamListenerContainer> rabbitListenerContainerFactory(Environment env) {
 			StreamRabbitListenerContainerFactory factory = new StreamRabbitListenerContainerFactory(env);
 			factory.setObservationEnabled(true);
-			factory.setConsumerCustomizer((id, builder) -> {
+			factory.setConsumerCustomizer((id, builder) ->
 				builder.name(id)
 						.offset(OffsetSpecification.first())
-						.manualTrackingStrategy();
-			});
+						.manualTrackingStrategy());
 			return factory;
 		}
 
@@ -176,11 +174,10 @@ public class TracingTests extends SampleTestRunner {
 			StreamRabbitListenerContainerFactory factory = new StreamRabbitListenerContainerFactory(env);
 			factory.setNativeListener(true);
 			factory.setObservationEnabled(true);
-			factory.setConsumerCustomizer((id, builder) -> {
+			factory.setConsumerCustomizer((id, builder) ->
 				builder.name(id)
 						.offset(OffsetSpecification.first())
-						.manualTrackingStrategy();
-			});
+						.manualTrackingStrategy());
 			return factory;
 		}
 

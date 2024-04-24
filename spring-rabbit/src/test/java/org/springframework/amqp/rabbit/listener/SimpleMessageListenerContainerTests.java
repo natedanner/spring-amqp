@@ -908,9 +908,9 @@ public class SimpleMessageListenerContainerTests {
 
 		private final SimpleMessageListenerContainer simpleMessageListenerContainer;
 
-		private int shutdownCount = 0;
+		private int shutdownCount;
 
-		private Runnable lastTask = null;
+		private Runnable lastTask;
 
 		private TestExecutor(SimpleMessageListenerContainer simpleMessageListenerContainer) {
 			this.simpleMessageListenerContainer = simpleMessageListenerContainer;

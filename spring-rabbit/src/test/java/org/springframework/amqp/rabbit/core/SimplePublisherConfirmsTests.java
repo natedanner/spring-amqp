@@ -71,9 +71,8 @@ public class SimplePublisherConfirmsTests {
 			});
 			template.waitForConfirmsOrDie(10_000);
 			return true;
-		}, (tag, multiple) -> {
-			lastAck.set(tag);
-		}, (tag, multiple) -> {
+		}, (tag, multiple) ->
+			lastAck.set(tag), (tag, multiple) -> {
 		});
 		assertThat(invokeResult).isTrue();
 		assertThat(lastAck.get()).isEqualTo(finalProperties.get().getPublishSequenceNumber());

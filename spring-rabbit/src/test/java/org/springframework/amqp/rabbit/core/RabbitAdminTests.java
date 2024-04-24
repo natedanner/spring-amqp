@@ -40,6 +40,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.UUID;
@@ -177,13 +178,13 @@ public class RabbitAdminTests extends NeedsManagementTests {
 		RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory);
 		try {
 			ApplicationContext ctx = mock(ApplicationContext.class);
-			Map<String, Queue> queues = new HashMap<String, Queue>();
+			Map<String, Queue> queues = new HashMap<>();
 			queues.put("nonDurQ", new Queue("testq.nonDur", false, false, false));
 			queues.put("adQ", new Queue("testq.ad", true, false, true));
 			queues.put("exclQ", new Queue("testq.excl", true, true, false));
 			queues.put("allQ", new Queue("testq.all", false, true, true));
 			given(ctx.getBeansOfType(Queue.class)).willReturn(queues);
-			Map<String, Exchange> exchanges = new HashMap<String, Exchange>();
+			Map<String, Exchange> exchanges = new HashMap<>();
 			exchanges.put("nonDurEx", new DirectExchange("testex.nonDur", false, false));
 			exchanges.put("adEx", new DirectExchange("testex.ad", true, true));
 			exchanges.put("allEx", new DirectExchange("testex.all", false, true));
@@ -291,7 +292,7 @@ public class RabbitAdminTests extends NeedsManagementTests {
 		CachingConnectionFactory ccf = new CachingConnectionFactory(rabbitConnectionFactory);
 		ccf.setExecutor(mock(ExecutorService.class));
 		RabbitAdmin admin = new RabbitAdmin(ccf);
-		List<DeclarationExceptionEvent> events = new ArrayList<DeclarationExceptionEvent>();
+		List<DeclarationExceptionEvent> events = new ArrayList<>();
 		admin.setApplicationEventPublisher(new EventPublisher(events));
 		admin.setIgnoreDeclarationExceptions(true);
 		admin.declareQueue(new AnonymousQueue());
@@ -359,7 +360,7 @@ public class RabbitAdminTests extends NeedsManagementTests {
 		admin.setApplicationContext(ctx);
 		ctx.getBeanFactory().initializeBean(admin, "admin");
 		ctx.refresh();
-		assertThatThrownBy(() -> ccf.createConnection())
+		assertThatThrownBy(ccf::createConnection)
 			.isInstanceOf(UncategorizedAmqpException.class);
 		ctx.close();
 		verify(channel, times(3)).queueDeclare(anyString(), anyBoolean(), anyBoolean(), anyBoolean(), any());
@@ -373,14 +374,14 @@ public class RabbitAdminTests extends NeedsManagementTests {
 		AnonymousQueue queue = new AnonymousQueue();
 		admin.declareQueue(queue);
 		AnonymousQueue queue1 = queue;
-		Map<String, Object> info = await().until(() -> queueInfo(queue1.getName()), inf -> inf != null);
+		Map<String, Object> info = await().until(() -> queueInfo(queue1.getName()), Objects::nonNull);
 		assertThat(arguments(info).get(Queue.X_QUEUE_LEADER_LOCATOR)).isEqualTo("client-local");
 
 		queue = new AnonymousQueue();
 		queue.setLeaderLocator(null);
 		admin.declareQueue(queue);
 		AnonymousQueue queue2 = queue;
-		info = await().until(() -> queueInfo(queue2.getName()), inf -> inf != null);
+		info = await().until(() -> queueInfo(queue2.getName()), Objects::nonNull);
 		assertThat(arguments(info).get(Queue.X_QUEUE_LEADER_LOCATOR)).isNull();
 		cf.destroy();
 	}

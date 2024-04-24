@@ -44,9 +44,9 @@ public abstract class AbstractJavaTypeMapper implements BeanClassLoaderAware {
 
 	public static final String DEFAULT_KEY_CLASSID_FIELD_NAME = "__KeyTypeId__";
 
-	private final Map<String, Class<?>> idClassMapping = new HashMap<String, Class<?>>();
+	private final Map<String, Class<?>> idClassMapping = new HashMap<>();
 
-	private final Map<Class<?>, String> classIdMapping = new HashMap<Class<?>, String>();
+	private final Map<Class<?>, String> classIdMapping = new HashMap<>();
 
 	private ClassLoader classLoader = ClassUtils.getDefaultClassLoader();
 

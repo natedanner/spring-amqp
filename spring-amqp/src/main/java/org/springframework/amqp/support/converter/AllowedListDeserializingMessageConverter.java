@@ -32,7 +32,7 @@ import org.springframework.amqp.utils.SerializationUtils;
  */
 public abstract class AllowedListDeserializingMessageConverter extends AbstractMessageConverter {
 
-	private final Set<String> allowedListPatterns = new LinkedHashSet<String>();
+	private final Set<String> allowedListPatterns = new LinkedHashSet<>();
 
 	/**
 	 * Set simple patterns for allowable packages/classes for deserialization.

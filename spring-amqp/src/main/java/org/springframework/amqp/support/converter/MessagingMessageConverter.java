@@ -133,7 +133,7 @@ public class MessagingMessageConverter implements MessageConverter, Initializing
 		if (convertedObject == null) {
 			throw new MessageConversionException("Message converter returned null");
 		}
-		MessageBuilder<Object> builder = (convertedObject instanceof org.springframework.messaging.Message) ?
+		MessageBuilder<Object> builder = convertedObject instanceof org.springframework.messaging.Message ?
 				MessageBuilder.fromMessage((org.springframework.messaging.Message<Object>) convertedObject) : // NOSONAR
 				MessageBuilder.withPayload(convertedObject);
 		return builder.copyHeadersIfAbsent(mappedHeaders).build();

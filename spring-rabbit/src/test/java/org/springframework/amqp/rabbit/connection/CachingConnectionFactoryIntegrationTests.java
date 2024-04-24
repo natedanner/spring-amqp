@@ -102,7 +102,7 @@ public class CachingConnectionFactoryIntegrationTests {
 
 	@AfterEach
 	public void close() {
-		if (!this.connectionFactory.getVirtualHost().equals("non-existent")) {
+		if (!"non-existent".equals(this.connectionFactory.getVirtualHost())) {
 			RabbitAvailableCondition.getBrokerRunning().purgeTestQueues();
 		}
 		assertThat(connectionFactory.getRabbitConnectionFactory().getClientProperties().get("foo")).isEqualTo("bar");
@@ -145,10 +145,10 @@ public class CachingConnectionFactoryIntegrationTests {
 		connectionFactory.setChannelCacheSize(1);
 		connectionFactory.setChannelCheckoutTimeout(10);
 		connectionFactory.setExecutor(Executors.newCachedThreadPool());
-		List<Connection> connections = new ArrayList<Connection>();
+		List<Connection> connections = new ArrayList<>();
 		connections.add(connectionFactory.createConnection());
 		connections.add(connectionFactory.createConnection());
-		List<Channel> channels = new ArrayList<Channel>();
+		List<Channel> channels = new ArrayList<>();
 		channels.add(connections.get(0).createChannel(false));
 		try {
 			channels.add(connections.get(0).createChannel(false));
@@ -183,13 +183,13 @@ public class CachingConnectionFactoryIntegrationTests {
 		connectionFactory.setChannelCacheSize(3);
 		// the following is needed because we close the underlying connection below.
 		connectionFactory.getRabbitConnectionFactory().setAutomaticRecoveryEnabled(false);
-		List<Connection> connections = new ArrayList<Connection>();
+		List<Connection> connections = new ArrayList<>();
 		connections.add(connectionFactory.createConnection());
 		connections.add(connectionFactory.createConnection());
 		Set<?> allocatedConnections = TestUtils.getPropertyValue(connectionFactory, "allocatedConnections", Set.class);
 		assertThat(allocatedConnections).hasSize(2);
 		assertThat(connections.get(1)).isNotSameAs(connections.get(0));
-		List<Channel> channels = new ArrayList<Channel>();
+		List<Channel> channels = new ArrayList<>();
 		for (int i = 0; i < 5; i++) {
 			channels.add(connections.get(0).createChannel(false));
 			channels.add(connections.get(1).createChannel(false));

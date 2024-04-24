@@ -172,7 +172,7 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 
 	private boolean autoDeclare = true;
 
-	private boolean mismatchedQueuesFatal = false;
+	private boolean mismatchedQueuesFatal;
 
 	private long failedDeclarationRetryInterval = DEFAULT_FAILED_DECLARATION_RETRY_INTERVAL;
 
@@ -180,9 +180,9 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 
 	private int phase = Integer.MAX_VALUE;
 
-	private volatile boolean active = false;
+	private volatile boolean active;
 
-	private volatile boolean running = false;
+	private volatile boolean running;
 
 	private ErrorHandler errorHandler = new ConditionalRejectingErrorHandler();
 

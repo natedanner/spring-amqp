@@ -1547,12 +1547,12 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 		@Override
 		public Object invoke(MethodInvocation invocation) throws Throwable {
 			String methodName = invocation.getMethod().getName();
-			if (methodName.equals("listen") && invocation.getArguments().length == 1 &&
+			if ("listen".equals(methodName) && invocation.getArguments().length == 1 &&
 					invocation.getArguments()[0].equals("intercept this")) {
 				this.oneWayLatch.countDown();
 				return invocation.proceed();
 			}
-			else if (methodName.equals("listenAndReply") && invocation.getArguments().length == 1 &&
+			else if ("listenAndReply".equals(methodName) && invocation.getArguments().length == 1 &&
 					invocation.getArguments()[0].equals("intercept this")) {
 				Object result = invocation.proceed();
 				if (result.equals("INTERCEPT THIS")) {
@@ -2075,7 +2075,7 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 		@RabbitHandler
 		@SendTo("${foo.bar:#{sendToRepliesBean}}")
 		public String bar(@NonNull Bar bar) {
-			if (bar.field.equals("crash")) {
+			if ("crash".equals(bar.field)) {
 				throw new RuntimeException("Test reply from error handler");
 			}
 			return "BAR: " + bar.field;
@@ -2294,7 +2294,7 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 
 		@Bean
 		public Converter<Foo1, Foo2> foo1To2Converter() {
-			return new Converter<Foo1, Foo2>() {
+			return new Converter<>() {
 
 				@SuppressWarnings("unused")
 				private boolean converted;
@@ -2381,7 +2381,7 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 
 		@Bean
 		public Converter<Foo1, Foo2> foo1To2Converter() {
-			return new Converter<Foo1, Foo2>() {
+			return new Converter<>() {
 
 				@SuppressWarnings("unused")
 				private boolean converted;

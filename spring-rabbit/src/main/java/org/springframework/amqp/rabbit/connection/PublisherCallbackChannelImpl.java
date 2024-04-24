@@ -924,7 +924,7 @@ public class PublisherCallbackChannelImpl
 				return Collections.<PendingConfirm>emptyList();
 			}
 			else {
-				List<PendingConfirm> expired = new ArrayList<PendingConfirm>();
+				List<PendingConfirm> expired = new ArrayList<>();
 				Iterator<Entry<Long, PendingConfirm>> iterator = pendingConfirmsForListener.entrySet().iterator();
 				while (iterator.hasNext()) {
 					PendingConfirm pendingConfirm = iterator.next().getValue();
@@ -1025,7 +1025,7 @@ public class PublisherCallbackChannelImpl
 		 */
 		Map<Long, Listener> involvedListeners = this.listenerForSeq.headMap(seq + 1);
 		// eliminate duplicates
-		Set<Listener> listenersForAcks = new HashSet<Listener>(involvedListeners.values());
+		Set<Listener> listenersForAcks = new HashSet<>(involvedListeners.values());
 		for (Listener involvedListener : listenersForAcks) {
 			// find all unack'd confirms for this listener and handle them
 			SortedMap<Long, PendingConfirm> confirmsMap = this.pendingConfirms.get(involvedListener);
@@ -1047,7 +1047,7 @@ public class PublisherCallbackChannelImpl
 				}
 			}
 		}
-		List<Long> seqs = new ArrayList<Long>(involvedListeners.keySet());
+		List<Long> seqs = new ArrayList<>(involvedListeners.keySet());
 		for (Long key : seqs) {
 			this.listenerForSeq.remove(key);
 		}

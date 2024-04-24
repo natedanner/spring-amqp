@@ -62,7 +62,7 @@ public class SerializerMessageConverter extends AllowedListDeserializingMessageC
 
 	private Deserializer<Object> deserializer = new DefaultDeserializer();
 
-	private boolean ignoreContentType = false;
+	private boolean ignoreContentType;
 
 	private ClassLoader defaultDeserializerClassLoader = ClassUtils.getDefaultClassLoader();
 
@@ -83,7 +83,7 @@ public class SerializerMessageConverter extends AllowedListDeserializingMessageC
 	 * @param defaultCharset The default charset.
 	 */
 	public void setDefaultCharset(@Nullable String defaultCharset) {
-		this.defaultCharset = (defaultCharset != null) ? defaultCharset : DEFAULT_CHARSET;
+		this.defaultCharset = defaultCharset != null ? defaultCharset : DEFAULT_CHARSET;
 	}
 
 	/**

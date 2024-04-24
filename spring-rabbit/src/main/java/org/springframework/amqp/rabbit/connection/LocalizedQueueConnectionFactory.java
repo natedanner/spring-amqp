@@ -61,13 +61,13 @@ public class LocalizedQueueConnectionFactory implements ConnectionFactory, Routi
 
 	private final Lock lock = new ReentrantLock();
 
-	private final Map<String, ConnectionFactory> nodeFactories = new HashMap<String, ConnectionFactory>();
+	private final Map<String, ConnectionFactory> nodeFactories = new HashMap<>();
 
 	private final ConnectionFactory defaultConnectionFactory;
 
 	private final String[] adminUris;
 
-	private final Map<String, String> nodeToAddress = new HashMap<String, String>();
+	private final Map<String, String> nodeToAddress = new HashMap<>();
 
 	private final String vhost;
 
@@ -281,7 +281,7 @@ public class LocalizedQueueConnectionFactory implements ConnectionFactory, Routi
 
 	@Override
 	public ConnectionFactory getTargetConnectionFactory(Object key) {
-		String queue = ((String) key);
+		String queue = (String) key;
 		queue = queue.substring(1, queue.length() - 1);
 		Assert.isTrue(!queue.contains(","),
 				() -> "Cannot use LocalizedQueueConnectionFactory with more than one queue: " + key);

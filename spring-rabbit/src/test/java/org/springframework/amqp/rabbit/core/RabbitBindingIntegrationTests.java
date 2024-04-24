@@ -50,7 +50,7 @@ public class RabbitBindingIntegrationTests {
 
 	public static final String QUEUE_NAME = "test.queue.RabbitBindingIntegrationTests";
 
-	private static Queue QUEUE = new Queue(QUEUE_NAME);
+	private static Queue queue = new Queue(QUEUE_NAME);
 
 	private CachingConnectionFactory connectionFactory;
 
@@ -77,7 +77,7 @@ public class RabbitBindingIntegrationTests {
 		admin.declareExchange(exchange);
 		template.setExchange(exchange.getName());
 
-		admin.declareBinding(BindingBuilder.bind(QUEUE).to(exchange).with("*.end"));
+		admin.declareBinding(BindingBuilder.bind(queue).to(exchange).with("*.end"));
 
 		template.execute(channel -> {
 
@@ -114,7 +114,7 @@ public class RabbitBindingIntegrationTests {
 		final TopicExchange exchange = new TopicExchange("topic");
 		admin.declareExchange(exchange);
 
-		admin.declareBinding(BindingBuilder.bind(QUEUE).to(exchange).with("*.end"));
+		admin.declareBinding(BindingBuilder.bind(queue).to(exchange).with("*.end"));
 
 		template.execute(channel -> {
 
@@ -153,7 +153,7 @@ public class RabbitBindingIntegrationTests {
 		admin.declareExchange(exchange);
 		template.setExchange(exchange.getName());
 
-		admin.declareBinding(BindingBuilder.bind(QUEUE).to(exchange).with("*.end"));
+		admin.declareBinding(BindingBuilder.bind(queue).to(exchange).with("*.end"));
 
 		final CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory();
 		cachingConnectionFactory.setHost("localhost");
@@ -192,7 +192,7 @@ public class RabbitBindingIntegrationTests {
 		admin.declareExchange(exchange);
 		template.setExchange(exchange.getName());
 
-		admin.declareBinding(BindingBuilder.bind(QUEUE).to(exchange).with("*.end"));
+		admin.declareBinding(BindingBuilder.bind(queue).to(exchange).with("*.end"));
 
 		template.execute(channel -> {
 
@@ -242,7 +242,7 @@ public class RabbitBindingIntegrationTests {
 		admin.declareExchange(exchange);
 		template.setExchange(exchange.getName());
 
-		admin.declareBinding(BindingBuilder.bind(QUEUE).to(exchange));
+		admin.declareBinding(BindingBuilder.bind(queue).to(exchange));
 
 		template.execute(channel -> {
 
@@ -268,10 +268,10 @@ public class RabbitBindingIntegrationTests {
 	private BlockingQueueConsumer createConsumer(RabbitAccessor accessor) {
 		BlockingQueueConsumer consumer = new BlockingQueueConsumer(
 				accessor.getConnectionFactory(), new DefaultMessagePropertiesConverter(),
-				new ActiveObjectCounter<BlockingQueueConsumer>(), AcknowledgeMode.AUTO, true, 1, QUEUE.getName());
+				new ActiveObjectCounter<BlockingQueueConsumer>(), AcknowledgeMode.AUTO, true, 1, queue.getName());
 		consumer.start();
 		// wait for consumeOk...
-		await().with().pollDelay(Duration.ZERO).until(() -> consumer.getConsumerTags().size() > 0);
+		await().with().pollDelay(Duration.ZERO).until(() -> !consumer.getConsumerTags().isEmpty());
 		return consumer;
 	}
 

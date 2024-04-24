@@ -31,7 +31,7 @@ import com.rabbitmq.client.ShutdownSignalException;
  */
 public class CompositeConnectionListener implements ConnectionListener {
 
-	private List<ConnectionListener> delegates = new CopyOnWriteArrayList<ConnectionListener>();
+	private List<ConnectionListener> delegates = new CopyOnWriteArrayList<>();
 
 	@Override
 	public void onCreate(Connection connection) {
@@ -54,7 +54,7 @@ public class CompositeConnectionListener implements ConnectionListener {
 	}
 
 	public void setDelegates(List<? extends ConnectionListener> delegates) {
-		this.delegates = new ArrayList<ConnectionListener>(delegates);
+		this.delegates = new ArrayList<>(delegates);
 	}
 
 	public void addDelegate(ConnectionListener delegate) {

@@ -111,9 +111,8 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests2 {
 		rcf.setDefaultTargetConnectionFactory(this.connectionFactoryWithConfirmsEnabled);
 		this.templateWithConfirmsEnabled.setConnectionFactory(rcf);
 		if (listener) {
-			this.templateWithConfirmsEnabled.setConfirmCallback((correlationData, ack, cause) -> {
-				latch.countDown();
-			});
+			this.templateWithConfirmsEnabled.setConfirmCallback((correlationData, ack, cause) ->
+				latch.countDown());
 		}
 		this.templateWithConfirmsEnabled.setMandatory(true);
 		CorrelationData corr = new CorrelationData();

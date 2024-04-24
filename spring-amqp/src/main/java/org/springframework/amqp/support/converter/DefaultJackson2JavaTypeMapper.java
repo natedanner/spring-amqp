@@ -45,7 +45,7 @@ public class DefaultJackson2JavaTypeMapper extends AbstractJavaTypeMapper implem
 					"java.lang"
 			);
 
-	private final Set<String> trustedPackages = new LinkedHashSet<String>(TRUSTED_PACKAGES);
+	private final Set<String> trustedPackages = new LinkedHashSet<>(TRUSTED_PACKAGES);
 
 	private volatile TypePrecedence typePrecedence = TypePrecedence.INFERRED;
 
@@ -136,10 +136,7 @@ public class DefaultJackson2JavaTypeMapper extends AbstractJavaTypeMapper implem
 		if (inferredType.isContainerType() && inferredType.getContentType().isAbstract()) {
 			return false;
 		}
-		if (inferredType.getKeyType() != null && inferredType.getKeyType().isAbstract()) {
-			return false;
-		}
-		return true;
+		return !(inferredType.getKeyType() != null && inferredType.getKeyType().isAbstract());
 	}
 
 	private JavaType fromTypeHeader(MessageProperties properties, String typeIdHeader) {

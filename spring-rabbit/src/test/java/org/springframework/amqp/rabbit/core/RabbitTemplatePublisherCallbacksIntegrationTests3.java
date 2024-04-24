@@ -86,9 +86,8 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests3 {
 			returnCalledFirst.set(returnLatch.getCount() == 0);
 			confirmLatch.countDown();
 		});
-		template.setReturnsCallback((returned) -> {
-			returnLatch.countDown();
-		});
+		template.setReturnsCallback(returned ->
+			returnLatch.countDown());
 		template.setMandatory(true);
 		Connection conn = cf.createConnection();
 		Channel channel1 = conn.createChannel(false);
@@ -141,9 +140,8 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests3 {
 		RabbitTemplate template = new RabbitTemplate(cf);
 		template.setReplyTimeout(0);
 		final CountDownLatch confirmLatch = new CountDownLatch(2);
-		template.setConfirmCallback((cd, a, c) -> {
-			confirmLatch.countDown();
-		});
+		template.setConfirmCallback((cd, a, c) ->
+			confirmLatch.countDown());
 		template.convertSendAndReceive("", QUEUE3, "foo", new CorrelationData("foo"));
 		template.convertSendAndReceive("", QUEUE3, "foo", new CorrelationData("foo")); // listener not registered
 		assertThat(confirmLatch.await(10, TimeUnit.SECONDS)).isTrue();

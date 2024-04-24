@@ -188,7 +188,7 @@ class ListenerContainerParser implements BeanDefinitionParser {
 			}
 			else {
 				String[] names = StringUtils.commaDelimitedListToStringArray(queues);
-				List<RuntimeBeanReference> values = new ManagedList<RuntimeBeanReference>();
+				List<RuntimeBeanReference> values = new ManagedList<>();
 				for (int i = 0; i < names.length; i++) {
 					values.add(new RuntimeBeanReference(names[i].trim()));
 				}
@@ -196,7 +196,7 @@ class ListenerContainerParser implements BeanDefinitionParser {
 			}
 		}
 
-		ManagedMap<String, TypedStringValue> args = new ManagedMap<String, TypedStringValue>();
+		ManagedMap<String, TypedStringValue> args = new ManagedMap<>();
 
 		String priority = listenerEle.getAttribute("priority");
 		if (StringUtils.hasText(priority)) {

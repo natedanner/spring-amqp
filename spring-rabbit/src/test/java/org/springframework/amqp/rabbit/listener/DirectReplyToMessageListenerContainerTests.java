@@ -21,6 +21,7 @@ import static org.awaitility.Awaitility.await;
 
 import java.time.Duration;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -87,7 +88,7 @@ public class DirectReplyToMessageListenerContainerTests {
 		Channel replyChannel = connectionFactory.createConnection().createChannel(false);
 		GetResponse request = await()
 				.pollDelay(Duration.ZERO)
-				.until(() -> replyChannel.basicGet(TEST_RELEASE_CONSUMER_Q, true), req -> req != null);
+				.until(() -> replyChannel.basicGet(TEST_RELEASE_CONSUMER_Q, true), Objects::nonNull);
 		assertThat(request).isNotNull();
 		replyChannel.basicPublish("", request.getProps().getReplyTo(), new BasicProperties(), "bar".getBytes());
 		replyChannel.close();

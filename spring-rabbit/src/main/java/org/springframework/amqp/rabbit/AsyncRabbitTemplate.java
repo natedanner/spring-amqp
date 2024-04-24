@@ -164,7 +164,7 @@ public class AsyncRabbitTemplate implements AsyncAmqpTemplate, ChannelAwareMessa
 		this.container = new SimpleMessageListenerContainer(connectionFactory);
 		JavaUtils.INSTANCE
 				.acceptIfNotNull(this.template.getAfterReceivePostProcessors(),
-						(value) -> this.container.setAfterReceivePostProcessors(
+						value -> this.container.setAfterReceivePostProcessors(
 								value.toArray(new MessagePostProcessor[0])));
 		this.container.setQueueNames(replyQueue);
 		this.container.setMessageListener(this);
@@ -245,7 +245,7 @@ public class AsyncRabbitTemplate implements AsyncAmqpTemplate, ChannelAwareMessa
 		this.directReplyToContainer = new DirectReplyToMessageListenerContainer(this.template.getConnectionFactory());
 		JavaUtils.INSTANCE
 				.acceptIfNotNull(template.getAfterReceivePostProcessors(),
-						(value) -> this.directReplyToContainer.setAfterReceivePostProcessors(
+						value -> this.directReplyToContainer.setAfterReceivePostProcessors(
 								value.toArray(new MessagePostProcessor[0])));
 		this.directReplyToContainer.setMessageListener(this);
 	}
@@ -482,7 +482,7 @@ public class AsyncRabbitTemplate implements AsyncAmqpTemplate, ChannelAwareMessa
 	private <C> RabbitConverterFuture<C> convertSendAndReceive(String exchange, String routingKey, Object object,
 			MessagePostProcessor messagePostProcessor, ParameterizedTypeReference<C> responseType) {
 
-		AsyncCorrelationData<C> correlationData = new AsyncCorrelationData<C>(messagePostProcessor, responseType,
+		AsyncCorrelationData<C> correlationData = new AsyncCorrelationData<>(messagePostProcessor, responseType,
 				this.enableConfirms);
 		if (this.container != null) {
 			this.template.convertAndSend(exchange, routingKey, object, this.messagePostProcessor, correlationData);
@@ -731,7 +731,7 @@ public class AsyncRabbitTemplate implements AsyncAmqpTemplate, ChannelAwareMessa
 				messageToSend = correlationData.userPostProcessor.postProcessMessage(message);
 			}
 			String correlationId = getOrSetCorrelationIdAndSetReplyTo(messageToSend, correlationData);
-			correlationData.future = new RabbitConverterFuture<C>(correlationId, message,
+			correlationData.future = new RabbitConverterFuture<>(correlationId, message,
 					AsyncRabbitTemplate.this::canceler, AsyncRabbitTemplate.this::timeoutTask);
 			if (correlationData.enableConfirms) {
 				correlationData.setId(correlationId);

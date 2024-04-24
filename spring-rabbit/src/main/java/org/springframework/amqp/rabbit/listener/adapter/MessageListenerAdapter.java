@@ -129,7 +129,7 @@ import com.rabbitmq.client.Channel;
  */
 public class MessageListenerAdapter extends AbstractAdaptableMessageListener {
 
-	private final Map<String, String> queueOrTagToMethodName = new HashMap<String, String>();
+	private final Map<String, String> queueOrTagToMethodName = new HashMap<>();
 
 	/**
 	 * Out-of-the-box value for the default listener method: "handleMessage".

@@ -120,12 +120,12 @@ public class Address {
 
 		Address address = (Address) o;
 
-		return !(this.exchangeName != null
+		return this.exchangeName == null
 				? !this.exchangeName.equals(address.exchangeName)
-				: address.exchangeName != null)
-				&& !(this.routingKey != null
+				: address.exchangeName != null
+				&& this.routingKey == null
 				? !this.routingKey.equals(address.routingKey)
-				: address.routingKey != null);
+				: address.routingKey != null;
 	}
 
 	@Override

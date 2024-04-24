@@ -318,9 +318,7 @@ public class DirectMessageListenerContainerMockTests {
 		Channel rabbitChannel1 = mock(Channel.class);
 		Channel rabbitChannel2 = mock(Channel.class);
 		AtomicReference<Channel> target = new AtomicReference<>(rabbitChannel1);
-		willAnswer(inv -> {
-			return target.get();
-		}).given(channel).getTargetChannel();
+		willAnswer(inv -> target.get()).given(channel).getTargetChannel();
 
 		given(connectionFactory.createConnection()).willReturn(connection);
 		given(connection.createChannel(anyBoolean())).willReturn(channel);
@@ -347,9 +345,8 @@ public class DirectMessageListenerContainerMockTests {
 		container.setQueueNames("test");
 		container.setPrefetchCount(2);
 		container.setMonitorInterval(100);
-		container.setMessageListener(msg -> {
-			target.set(rabbitChannel2);
-		});
+		container.setMessageListener(msg ->
+			target.set(rabbitChannel2));
 		container.setAcknowledgeMode(AcknowledgeMode.MANUAL);
 		container.afterPropertiesSet();
 		container.start();

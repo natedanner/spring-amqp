@@ -59,7 +59,7 @@ public class DefaultMessagePropertiesConverterTests {
 
 	@Test
 	public void testToMessagePropertiesLongString() {
-		Map<String, Object> headers = new HashMap<String, Object>();
+		Map<String, Object> headers = new HashMap<>();
 		headers.put("longString", longString);
 		BasicProperties source = new BasicProperties.Builder()
 				.headers(headers)
@@ -70,7 +70,7 @@ public class DefaultMessagePropertiesConverterTests {
 
 	@Test
 	public void testToMessagePropertiesLongStringInList() {
-		Map<String, Object> headers = new HashMap<String, Object>();
+		Map<String, Object> headers = new HashMap<>();
 		headers.put("list", Arrays.asList(longString));
 		BasicProperties source = new BasicProperties.Builder()
 				.headers(headers)
@@ -81,7 +81,7 @@ public class DefaultMessagePropertiesConverterTests {
 
 	@Test
 	public void testToMessagePropertiesLongStringDeepInList() {
-		Map<String, Object> headers = new HashMap<String, Object>();
+		Map<String, Object> headers = new HashMap<>();
 		headers.put("list", Arrays.asList(Arrays.asList(longString)));
 		BasicProperties source = new BasicProperties.Builder()
 				.headers(headers)
@@ -93,9 +93,9 @@ public class DefaultMessagePropertiesConverterTests {
 	@Test
 	@SuppressWarnings("unchecked")
 	public void testToMessagePropertiesLongStringInMap() {
-		Map<String, Object> mapWithLongString = new HashMap<String, Object>();
+		Map<String, Object> mapWithLongString = new HashMap<>();
 		mapWithLongString.put("longString", longString);
-		Map<String, Object> headers = new HashMap<String, Object>();
+		Map<String, Object> headers = new HashMap<>();
 		headers.put("map", mapWithLongString);
 		BasicProperties source = new BasicProperties.Builder()
 				.headers(headers)
@@ -106,7 +106,7 @@ public class DefaultMessagePropertiesConverterTests {
 
 	@Test
 	public void testLongLongString() {
-		Map<String, Object> headers = new HashMap<String, Object>();
+		Map<String, Object> headers = new HashMap<>();
 		headers.put("longString", longString);
 		headers.put("string1025", LongStringHelper.asLongString(new byte[1025]));
 		byte[] longBytes = new byte[1026];
@@ -169,7 +169,7 @@ public class DefaultMessagePropertiesConverterTests {
 	@SuppressWarnings("unchecked")
 	public void testFromUnsupportedValueInMap() {
 		MessageProperties messageProperties = new MessageProperties();
-		Map<String, Object> mapWithUnsupportedValue = new HashMap<String, Object>();
+		Map<String, Object> mapWithUnsupportedValue = new HashMap<>();
 		mapWithUnsupportedValue.put("unsupported", new Object());
 		messageProperties.setHeader("map", mapWithUnsupportedValue);
 		BasicProperties basicProps = messagePropertiesConverter.fromMessageProperties(messageProperties, "UTF-8");

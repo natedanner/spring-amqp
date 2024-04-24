@@ -31,6 +31,7 @@ import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -253,7 +254,7 @@ public class BatchingRabbitTemplateTests {
 	}
 
 	private void testDebatchByContainer(AbstractMessageListenerContainer container, boolean asList) throws Exception {
-		final List<Message> received = new ArrayList<Message>();
+		final List<Message> received = new ArrayList<>();
 		final CountDownLatch latch = new CountDownLatch(asList ? 1 : 2);
 		container.setQueueNames(ROUTE);
 		List<Boolean> lastInBatch = new ArrayList<>();
@@ -627,7 +628,7 @@ public class BatchingRabbitTemplateTests {
 	@Nullable
 	private Message receive(BatchingRabbitTemplate template) throws InterruptedException {
 		return await().with().pollInterval(Duration.ofMillis(50))
-				.until(() -> template.receive(ROUTE), msg -> msg != null);
+				.until(() -> template.receive(ROUTE), Objects::nonNull);
 	}
 
 	@Test
@@ -667,11 +668,11 @@ public class BatchingRabbitTemplateTests {
 	}
 
 	private int getStreamLevel(Object stream) throws Exception {
-		final AtomicReference<Method> m = new AtomicReference<Method>();
+		final AtomicReference<Method> m = new AtomicReference<>();
 		ReflectionUtils.doWithMethods(AbstractCompressingPostProcessor.class, method -> {
 			method.setAccessible(true);
 			m.set(method);
-		}, method -> method.getName().equals("getCompressorStream"));
+		}, method -> "getCompressorStream".equals(method.getName()));
 		Object zipStream = m.get().invoke(stream, mock(OutputStream.class));
 		return TestUtils.getPropertyValue(zipStream, "def.level", Integer.class);
 	}

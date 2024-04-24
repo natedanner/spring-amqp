@@ -60,7 +60,7 @@ public class ListenFromAutoDeleteQueueTests {
 
 	private ConfigurableApplicationContext context;
 
-	private static BlockingQueue<Message> queue = new LinkedBlockingQueue<Message>();
+	private static BlockingQueue<Message> queue = new LinkedBlockingQueue<>();
 
 	private Queue expiringQueue;
 

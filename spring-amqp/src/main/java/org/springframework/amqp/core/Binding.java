@@ -48,7 +48,7 @@ public class Binding extends AbstractDeclarable {
 		/**
 		 * Exchange destination.
 		 */
-		EXCHANGE;
+		EXCHANGE
 	}
 
 	@Nullable

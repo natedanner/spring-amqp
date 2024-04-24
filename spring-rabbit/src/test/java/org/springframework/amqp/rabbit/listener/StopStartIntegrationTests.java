@@ -47,7 +47,7 @@ public class StopStartIntegrationTests {
 
 	private static AtomicInteger deliveries = new AtomicInteger();
 
-	private static int COUNT = 10000;
+	private static int count = 10000;
 
 	@Autowired
 	private RabbitTemplate rabbitTemplate;
@@ -67,14 +67,14 @@ public class StopStartIntegrationTests {
 
 	@Test
 	public void test() throws Exception {
-		for (int i = 0; i < COUNT; i++) {
+		for (int i = 0; i < count; i++) {
 			rabbitTemplate.convertAndSend("foo" + i);
 		}
 		long t = System.currentTimeMillis();
 		container.start();
 		int n;
 		int lastN = 0;
-		while ((n = deliveries.get()) < COUNT) {
+		while ((n = deliveries.get()) < count) {
 			Thread.sleep(2000);
 			container.stop();
 			container.start();

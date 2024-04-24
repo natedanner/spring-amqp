@@ -77,7 +77,7 @@ public abstract class AbstractJackson2MessageConverter extends AbstractMessageCo
 	private String supportedCTCharset;
 
 	@Nullable
-	private ClassMapper classMapper = null;
+	private ClassMapper classMapper;
 
 	private Charset defaultCharset = DEFAULT_CHARSET;
 
@@ -176,7 +176,7 @@ public abstract class AbstractJackson2MessageConverter extends AbstractMessageCo
 	 * @param defaultCharset The default charset.
 	 */
 	public void setDefaultCharset(@Nullable String defaultCharset) {
-		this.defaultCharset = (defaultCharset != null) ? Charset.forName(defaultCharset)
+		this.defaultCharset = defaultCharset != null ? Charset.forName(defaultCharset)
 				: DEFAULT_CHARSET;
 		this.charsetIsUtf8 = this.defaultCharset.equals(StandardCharsets.UTF_8);
 	}

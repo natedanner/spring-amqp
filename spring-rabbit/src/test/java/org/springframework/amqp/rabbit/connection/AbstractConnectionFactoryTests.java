@@ -227,9 +227,8 @@ public abstract class AbstractConnectionFactoryTests {
 				new FixedBackOff(interval, maxAttempts).start());
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
-		assertThatExceptionOfType(AmqpResourceNotAvailableException.class).isThrownBy(() -> {
-			simpleConnection.createChannel(false);
-		});
+		assertThatExceptionOfType(AmqpResourceNotAvailableException.class).isThrownBy(() ->
+			simpleConnection.createChannel(false));
 		stopWatch.stop();
 		assertThat(stopWatch.getTotalTimeMillis()).isGreaterThanOrEqualTo(maxAttempts * interval);
 		verify(mockConnection, times(maxAttempts + 1)).createChannel();

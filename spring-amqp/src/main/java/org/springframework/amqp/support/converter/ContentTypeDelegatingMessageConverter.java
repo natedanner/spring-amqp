@@ -37,7 +37,7 @@ import org.springframework.amqp.core.MessageProperties;
  */
 public class ContentTypeDelegatingMessageConverter implements MessageConverter {
 
-	private final Map<String, MessageConverter> delegates = new HashMap<String, MessageConverter>();
+	private final Map<String, MessageConverter> delegates = new HashMap<>();
 
 	private final MessageConverter defaultConverter;
 

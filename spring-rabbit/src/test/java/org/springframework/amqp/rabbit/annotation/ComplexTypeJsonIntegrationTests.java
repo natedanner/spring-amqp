@@ -19,6 +19,7 @@ package org.springframework.amqp.rabbit.annotation;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Test;
@@ -114,7 +115,7 @@ public class ComplexTypeJsonIntegrationTests {
 		});
 		Foo<Bar<Baz, Qux>> foo = await().until(
 				() -> this.rabbitTemplate.receiveAndConvert(new ParameterizedTypeReference<Foo<Bar<Baz, Qux>>>() { }),
-				msg -> msg != null);
+				Objects::nonNull);
 		verifyFooBarBazQux(foo);
 	}
 

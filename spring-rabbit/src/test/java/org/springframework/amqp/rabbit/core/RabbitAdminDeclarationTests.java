@@ -80,7 +80,7 @@ public class RabbitAdminDeclarationTests {
 		given(conn.createChannel(false)).willReturn(channel);
 		given(channel.queueDeclare("foo", true, false, false, new HashMap<>()))
 			.willReturn(new AMQImpl.Queue.DeclareOk("foo", 0, 0));
-		final AtomicReference<ConnectionListener> listener = new AtomicReference<ConnectionListener>();
+		final AtomicReference<ConnectionListener> listener = new AtomicReference<>();
 		willAnswer(invocation -> {
 			listener.set((ConnectionListener) invocation.getArguments()[0]);
 			return null;
@@ -100,7 +100,7 @@ public class RabbitAdminDeclarationTests {
 		listener.get().onCreate(conn);
 
 		verify(channel).queueDeclare("foo", true, false, false, new HashMap<>());
-		verify(channel).exchangeDeclare("bar", "direct", true, false, false, new HashMap<String, Object>());
+		verify(channel).exchangeDeclare("bar", "direct", true, false, false, new HashMap<>());
 		verify(channel).queueBind("foo", "bar", "foo", new HashMap<>());
 	}
 
@@ -108,7 +108,7 @@ public class RabbitAdminDeclarationTests {
 	public void testNoDeclareWithCachedConnections() throws Exception {
 		com.rabbitmq.client.ConnectionFactory mockConnectionFactory = mock(com.rabbitmq.client.ConnectionFactory.class);
 
-		final List<Channel> mockChannels = new ArrayList<Channel>();
+		final List<Channel> mockChannels = new ArrayList<>();
 
 		AtomicInteger connectionNumber = new AtomicInteger();
 		willAnswer(invocation -> {
@@ -154,7 +154,7 @@ public class RabbitAdminDeclarationTests {
 		given(conn.createChannel(false)).willReturn(channel);
 		given(channel.queueDeclare("foo", true, false, false, new HashMap<>()))
 			.willReturn(new AMQImpl.Queue.DeclareOk("foo", 0, 0));
-		final AtomicReference<ConnectionListener> listener = new AtomicReference<ConnectionListener>();
+		final AtomicReference<ConnectionListener> listener = new AtomicReference<>();
 		willAnswer(invocation -> {
 			listener.set(invocation.getArgument(0));
 			return null;
@@ -177,7 +177,7 @@ public class RabbitAdminDeclarationTests {
 		listener.get().onCreate(conn);
 
 		verify(channel).queueDeclare("foo", true, false, false, new HashMap<>());
-		verify(channel).exchangeDeclare("bar", "direct", true, false, false, new HashMap<String, Object>());
+		verify(channel).exchangeDeclare("bar", "direct", true, false, false, new HashMap<>());
 		verify(channel).queueBind("foo", "bar", "foo", new HashMap<>());
 	}
 
@@ -190,7 +190,7 @@ public class RabbitAdminDeclarationTests {
 		given(cf.createConnection()).willReturn(conn);
 		given(conn.createChannel(false)).willReturn(channel);
 		given(channel.queueDeclare("foo", true, false, false, null)).willReturn(new AMQImpl.Queue.DeclareOk("foo", 0, 0));
-		final AtomicReference<ConnectionListener> listener = new AtomicReference<ConnectionListener>();
+		final AtomicReference<ConnectionListener> listener = new AtomicReference<>();
 		willAnswer(invocation -> {
 			listener.set(invocation.getArgument(0));
 			return null;
@@ -228,7 +228,7 @@ public class RabbitAdminDeclarationTests {
 		given(cf.createConnection()).willReturn(conn);
 		given(conn.createChannel(false)).willReturn(channel);
 		given(channel.queueDeclare("foo", true, false, false, null)).willReturn(new AMQImpl.Queue.DeclareOk("foo", 0, 0));
-		final AtomicReference<ConnectionListener> listener = new AtomicReference<ConnectionListener>();
+		final AtomicReference<ConnectionListener> listener = new AtomicReference<>();
 		willAnswer(invocation -> {
 			listener.set(invocation.getArgument(0));
 			return null;
@@ -263,7 +263,7 @@ public class RabbitAdminDeclarationTests {
 		verify(Config.channel1).queueDeclare("foo", true, false, false, new HashMap<>());
 		verify(Config.channel1, never()).queueDeclare("baz", true, false, false, new HashMap<>());
 		verify(Config.channel1).queueDeclare("qux", true, false, false, new HashMap<>());
-		verify(Config.channel1).exchangeDeclare("bar", "direct", true, false, true, new HashMap<String, Object>());
+		verify(Config.channel1).exchangeDeclare("bar", "direct", true, false, true, new HashMap<>());
 		verify(Config.channel1).queueBind("foo", "bar", "foo", new HashMap<>());
 
 		Config.listener2.onCreate(Config.conn2);
@@ -371,9 +371,7 @@ public class RabbitAdminDeclarationTests {
 			ConnectionFactory connectionFactory = mock(ConnectionFactory.class);
 			given(connectionFactory.createConnection()).willReturn(conn1);
 			given(conn1.createChannel(false)).willReturn(channel1);
-			willAnswer(inv -> {
-				return new AMQImpl.Queue.DeclareOk(inv.getArgument(0), 0, 0);
-			}).given(channel1).queueDeclare(anyString(), anyBoolean(), anyBoolean(), anyBoolean(), any());
+			willAnswer(inv -> new AMQImpl.Queue.DeclareOk(inv.getArgument(0), 0, 0)).given(channel1).queueDeclare(anyString(), anyBoolean(), anyBoolean(), anyBoolean(), any());
 			willAnswer(invocation -> {
 				listener1 = invocation.getArgument(0);
 				return null;
@@ -386,9 +384,7 @@ public class RabbitAdminDeclarationTests {
 			ConnectionFactory connectionFactory = mock(ConnectionFactory.class);
 			given(connectionFactory.createConnection()).willReturn(conn2);
 			given(conn2.createChannel(false)).willReturn(channel2);
-			willAnswer(inv -> {
-				return new AMQImpl.Queue.DeclareOk(inv.getArgument(0), 0, 0);
-			}).given(channel2).queueDeclare(anyString(), anyBoolean(), anyBoolean(), anyBoolean(), any());
+			willAnswer(inv -> new AMQImpl.Queue.DeclareOk(inv.getArgument(0), 0, 0)).given(channel2).queueDeclare(anyString(), anyBoolean(), anyBoolean(), anyBoolean(), any());
 			willAnswer(invocation -> {
 				listener2 = invocation.getArgument(0);
 				return null;
@@ -401,9 +397,7 @@ public class RabbitAdminDeclarationTests {
 			ConnectionFactory connectionFactory = mock(ConnectionFactory.class);
 			given(connectionFactory.createConnection()).willReturn(conn3);
 			given(conn3.createChannel(false)).willReturn(channel3);
-			willAnswer(inv -> {
-				return new AMQImpl.Queue.DeclareOk(inv.getArgument(0), 0, 0);
-			}).given(channel3).queueDeclare(anyString(), anyBoolean(), anyBoolean(), anyBoolean(), any());
+			willAnswer(inv -> new AMQImpl.Queue.DeclareOk(inv.getArgument(0), 0, 0)).given(channel3).queueDeclare(anyString(), anyBoolean(), anyBoolean(), anyBoolean(), any());
 			willAnswer(invocation -> {
 				listener3 = invocation.getArgument(0);
 				return null;
@@ -413,14 +407,12 @@ public class RabbitAdminDeclarationTests {
 
 		@Bean
 		public RabbitAdmin admin1() throws IOException {
-			RabbitAdmin rabbitAdmin = new RabbitAdmin(cf1());
-			return rabbitAdmin;
+			return new RabbitAdmin(cf1());
 		}
 
 		@Bean
 		public RabbitAdmin admin2() throws IOException {
-			RabbitAdmin rabbitAdmin = new RabbitAdmin(cf2());
-			return rabbitAdmin;
+			return new RabbitAdmin(cf2());
 		}
 
 		@Bean
@@ -467,7 +459,7 @@ public class RabbitAdminDeclarationTests {
 		@Bean
 		public DeclarableCustomizer customizer1() {
 			return dec -> {
-				if (dec instanceof Queue && ((Queue) dec).getName().equals("baz")) {
+				if (dec instanceof Queue && "baz".equals(((Queue) dec).getName())) {
 					dec.addArgument("added.by.customizer.1", true);
 				}
 				return dec;
@@ -477,7 +469,7 @@ public class RabbitAdminDeclarationTests {
 		@Bean
 		public DeclarableCustomizer customizer2() {
 			return dec -> {
-				if (dec instanceof Queue && ((Queue) dec).getName().equals("baz")) {
+				if (dec instanceof Queue && "baz".equals(((Queue) dec).getName())) {
 					dec.addArgument("added.by.customizer.2", true);
 				}
 				return dec;

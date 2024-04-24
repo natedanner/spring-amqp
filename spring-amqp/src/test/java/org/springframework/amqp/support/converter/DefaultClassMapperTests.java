@@ -130,7 +130,7 @@ public class DefaultClassMapperTests {
 	}
 
 	private Map<String, Class<?>> map(String string, Class<?> class1) {
-		Map<String, Class<?>> map = new HashMap<String, Class<?>>();
+		Map<String, Class<?>> map = new HashMap<>();
 		map.put(string, class1);
 		return map;
 	}
@@ -158,7 +158,7 @@ public class DefaultClassMapperTests {
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + ((name == null) ? 0 : name.hashCode());
+			result = prime * result + (name == null ? 0 : name.hashCode());
 			return result;
 		}
 
@@ -213,8 +213,8 @@ public class DefaultClassMapperTests {
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + ((foo == null) ? 0 : foo.hashCode());
-			result = prime * result + ((name == null) ? 0 : name.hashCode());
+			result = prime * result + (foo == null ? 0 : foo.hashCode());
+			result = prime * result + (name == null ? 0 : name.hashCode());
 			return result;
 		}
 

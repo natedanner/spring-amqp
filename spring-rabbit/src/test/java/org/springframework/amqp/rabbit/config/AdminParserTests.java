@@ -41,7 +41,7 @@ import org.springframework.util.StringUtils;
  */
 public final class AdminParserTests {
 
-	private static Log logger = LogFactory.getLog(AdminParserTests.class);
+	private static final Log logger = LogFactory.getLog(AdminParserTests.class);
 
 	// Specifies if test case expects context to be valid or not: true - context expects to be valid.
 	private boolean validContext = true;

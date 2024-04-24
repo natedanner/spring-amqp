@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ActiveObjectCounter<T> {
 
-	private final ConcurrentMap<T, CountDownLatch> locks = new ConcurrentHashMap<T, CountDownLatch>();
+	private final ConcurrentMap<T, CountDownLatch> locks = new ConcurrentHashMap<>();
 
 	private volatile boolean active = true;
 
@@ -56,7 +56,7 @@ public class ActiveObjectCounter<T> {
 			if (this.locks.isEmpty()) {
 				return true;
 			}
-			Collection<T> objects = new HashSet<T>(this.locks.keySet());
+			Collection<T> objects = new HashSet<>(this.locks.keySet());
 			for (T object : objects) {
 				CountDownLatch lock = this.locks.get(object);
 				if (lock == null) {

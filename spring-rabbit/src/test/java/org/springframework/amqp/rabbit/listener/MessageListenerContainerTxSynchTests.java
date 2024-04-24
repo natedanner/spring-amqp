@@ -105,7 +105,7 @@ public class MessageListenerContainerTxSynchTests {
 				// verify no lingering resources bound to the executor's single thread
 				assertThat(TransactionSynchronizationManager.hasResource(connectionFactory)).isFalse();
 				assertThatIllegalStateException()
-						.isThrownBy(() -> (TransactionSynchronizationManager.getSynchronizations()).isEmpty())
+						.isThrownBy((TransactionSynchronizationManager.getSynchronizations())::isEmpty)
 						.withMessage("Transaction synchronization is not active");
 				return null;
 			}

@@ -209,7 +209,7 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 		assertThat(waited).as("Timed out waiting for message").isTrue();
 		assertThat(template.receiveAndConvert(queue.getName())).isNull();
 		assertThat(template.receiveAndConvert(queue1.getName())).isNull();
-		final AtomicReference<Object> newConsumer = new AtomicReference<Object>();
+		final AtomicReference<Object> newConsumer = new AtomicReference<>();
 		final CountDownLatch latch2 = new CountDownLatch(1);
 		container.setApplicationEventPublisher(new ApplicationEventPublisher() {
 
@@ -278,14 +278,14 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 		Set<?> missingQueues = TestUtils.getPropertyValue(newConsumer, "missingQueues", Set.class);
 		with().pollInterval(Duration.ofMillis(200)).await("Failed to detect missing queue")
 				.atMost(Duration.ofSeconds(20))
-				.until(() -> missingQueues.size() > 0);
+				.until(() -> !missingQueues.isEmpty());
 		assertThat(eventRef.get().getThrowable()).isInstanceOf(ConsumerCancelledException.class);
 		assertThat(eventRef.get().isFatal()).isFalse();
 		DirectFieldAccessor dfa = new DirectFieldAccessor(newConsumer);
 		dfa.setPropertyValue("lastRetryDeclaration", 0);
 		dfa.setPropertyValue("retryDeclarationInterval", 100);
 		admin.declareQueue(queue1);
-		await("Failed to redeclare missing queue").until(() -> missingQueues.size() == 0);
+		await("Failed to redeclare missing queue").until(missingQueues::isEmpty);
 		latch = new CountDownLatch(20);
 		container.setMessageListener(new MessageListenerAdapter(new PojoListener(latch)));
 		for (int i = 0; i < 10; i++) {
@@ -635,7 +635,7 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 
 	@Test
 	public void testTooSmallExecutor() {
-		this.container = createContainer((m) -> {
+		this.container = createContainer(m -> {
 		}, false, this.queue.getName());
 		ThreadPoolTaskExecutor exec = new ThreadPoolTaskExecutor();
 		exec.initialize();
@@ -654,7 +654,7 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 
 	@Test
 	public void testErrorStopsContainer() throws Exception {
-		this.container = createContainer((m) -> {
+		this.container = createContainer(m -> {
 			throw new Error("testError");
 		}, false, this.queue.getName());
 		this.container.setjavaLangErrorHandler(error -> { });
@@ -764,9 +764,8 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 	@Test
 	void forceStop() {
 		CountDownLatch latch1 = new CountDownLatch(1);
-		this.container = createContainer((ChannelAwareMessageListener) (msg, chan) -> {
-			latch1.await(10, TimeUnit.SECONDS);
-		}, false, TEST_QUEUE);
+		this.container = createContainer((ChannelAwareMessageListener) (msg, chan) ->
+			latch1.await(10, TimeUnit.SECONDS), false, TEST_QUEUE);
 		try {
 			this.container.setForceStop(true);
 			this.template.convertAndSend(TEST_QUEUE, "one");

@@ -29,7 +29,7 @@ import com.rabbitmq.client.ShutdownSignalException;
  */
 public class CompositeChannelListener implements ChannelListener {
 
-	private List<ChannelListener> delegates = new ArrayList<ChannelListener>();
+	private List<ChannelListener> delegates = new ArrayList<>();
 
 	public void onCreate(Channel channel, boolean transactional) {
 		for (ChannelListener delegate : this.delegates) {
@@ -45,7 +45,7 @@ public class CompositeChannelListener implements ChannelListener {
 	}
 
 	public void setDelegates(List<? extends ChannelListener> delegates) {
-		this.delegates = new ArrayList<ChannelListener>(delegates);
+		this.delegates = new ArrayList<>(delegates);
 	}
 
 	public void addDelegate(ChannelListener delegate) {

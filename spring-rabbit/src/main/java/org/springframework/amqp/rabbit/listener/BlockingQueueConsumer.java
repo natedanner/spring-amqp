@@ -501,7 +501,7 @@ public class BlockingQueueConsumer {
 	 */
 	@Nullable
 	private Message handle(@Nullable Delivery delivery) {
-		if ((delivery == null && this.shutdown != null)) {
+		if (delivery == null && this.shutdown != null) {
 			throw this.shutdown;
 		}
 		if (delivery == null) {
@@ -697,7 +697,7 @@ public class BlockingQueueConsumer {
 	private void handleDeclarationException(int passiveDeclareRetries, DeclarationException e) {
 		if (passiveDeclareRetries > 0 && this.channel.isOpen()) {
 			if (logger.isWarnEnabled()) {
-				logger.warn("Queue declaration failed; retries left=" + (passiveDeclareRetries), e);
+				logger.warn("Queue declaration failed; retries left=" + passiveDeclareRetries, e);
 			}
 			try {
 				Thread.sleep(this.failedDeclarationRetryInterval);

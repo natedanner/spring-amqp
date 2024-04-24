@@ -199,7 +199,7 @@ public class CachingConnectionFactory extends AbstractConnectionFactory
 
 	private final AtomicBoolean running = new AtomicBoolean();
 
-	private long channelCheckoutTimeout = 0;
+	private long channelCheckoutTimeout;
 
 	private CacheMode cacheMode = CacheMode.CHANNEL;
 
@@ -1124,8 +1124,8 @@ public class CachingConnectionFactory extends AbstractConnectionFactory
 		@Override // NOSONAR complexity
 		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable { // NOSONAR NCSS lines
 			ChannelProxy channelProxy = (ChannelProxy) proxy;
-			if (logger.isTraceEnabled() && !method.getName().equals("toString")
-					&& !method.getName().equals("hashCode") && !method.getName().equals("equals")) {
+			if (logger.isTraceEnabled() && !"toString".equals(method.getName())
+					&& !"hashCode".equals(method.getName()) && !"equals".equals(method.getName())) {
 				try {
 					logger.trace(this.target + " channel." + method.getName() + "(" + Arrays.toString(args) + ")");
 				}
@@ -1134,13 +1134,13 @@ public class CachingConnectionFactory extends AbstractConnectionFactory
 				}
 			}
 			String methodName = method.getName();
-			if (methodName.equals("txSelect") && !this.transactional) {
+			if ("txSelect".equals(methodName) && !this.transactional) {
 				throw new UnsupportedOperationException("Cannot start transaction on non-transactional channel");
 			}
 			switch (methodName) {
 				case "equals" -> {
 					// Only consider equal when proxies are identical.
-					return (channelProxy == args[0]); // NOSONAR
+					return channelProxy == args[0]; // NOSONAR
 				}
 				case "hashCode" -> {
 					// Use hashCode of Channel proxy.
@@ -1577,7 +1577,7 @@ public class CachingConnectionFactory extends AbstractConnectionFactory
 		}
 
 		private void notifyCloseIfNecessary() {
-			if (!(this.closeNotified.getAndSet(true))) {
+			if (!this.closeNotified.getAndSet(true)) {
 				getConnectionListener().onClose(this);
 			}
 		}

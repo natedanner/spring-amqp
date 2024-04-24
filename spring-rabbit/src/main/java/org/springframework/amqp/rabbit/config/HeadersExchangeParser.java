@@ -63,7 +63,7 @@ public class HeadersExchangeParser extends AbstractExchangeParser {
 				parserContext.getReaderContext()
 						.error("At least one of 'binding-arguments' sub-element or 'key/value' attributes pair have to be declared.", binding);
 			}
-			ManagedMap<TypedStringValue, TypedStringValue> map = new ManagedMap<TypedStringValue, TypedStringValue>();
+			ManagedMap<TypedStringValue, TypedStringValue> map = new ManagedMap<>();
 			map.put(new TypedStringValue(key), new TypedStringValue(value));
 			builder.addPropertyValue("arguments", map);
 		}

@@ -118,12 +118,11 @@ public class SuperStreamConcurrentSACTests extends AbstractTestContainerTests {
 				this.threads.add(Thread.currentThread().getName());
 				this.messageLatch.countDown();
 			});
-			container.setConsumerCustomizer((id, builder) -> {
+			container.setConsumerCustomizer((id, builder) ->
 				builder.consumerUpdateListener(context -> {
 					this.consumerLatch.countDown();
 					return OffsetSpecification.last();
-				});
-			});
+				}));
 			container.setAutoStartup(false);
 			return container;
 		}

@@ -38,7 +38,7 @@ public class LongRunningIntegrationTest extends TestWatcher {
 
 	public static final String RUN_LONG_INTEGRATION_TESTS = "RUN_LONG_INTEGRATION_TESTS";
 
-	private boolean shouldRun = false;
+	private boolean shouldRun;
 
 	public LongRunningIntegrationTest() {
 		this(RUN_LONG_INTEGRATION_TESTS);

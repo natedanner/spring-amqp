@@ -458,9 +458,8 @@ public class DirectMessageListenerContainer extends AbstractMessageListenerConta
 		startMonitor(idleEventInterval, namesToQueues);
 		if (queueNames.length > 0) {
 			doRedeclareElementsIfNecessary();
-			getTaskExecutor().execute(() -> { // NOSONAR never null here
-				startConsumers(queueNames);
-			});
+			getTaskExecutor().execute(() -> // NOSONAR never null here
+				startConsumers(queueNames));
 		}
 		else {
 			this.started = true;
@@ -1408,7 +1407,7 @@ public class DirectMessageListenerContainer extends AbstractMessageListenerConta
 			int result = 1;
 			result = prime * result + getEnclosingInstance().hashCode();
 			result = prime * result + this.index;
-			result = prime * result + ((this.queue == null) ? 0 : this.queue.hashCode());
+			result = prime * result + (this.queue == null ? 0 : this.queue.hashCode());
 			return result;
 		}
 

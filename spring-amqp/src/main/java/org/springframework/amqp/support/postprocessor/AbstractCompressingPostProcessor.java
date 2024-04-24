@@ -53,7 +53,7 @@ public abstract class AbstractCompressingPostProcessor implements MessagePostPro
 
 	private int order;
 
-	private boolean copyProperties = false;
+	private boolean copyProperties;
 
 	private String encodingDelimiter = ", ";
 
@@ -126,9 +126,9 @@ public abstract class AbstractCompressingPostProcessor implements MessagePostPro
 
 			MessageProperties messageProperties =
 					messagePropertiesBuilder.setContentEncoding(getEncoding() +
-							(!StringUtils.hasText(originalProperties.getContentEncoding())
-									? ""
-									: this.encodingDelimiter + originalProperties.getContentEncoding()))
+							(StringUtils.hasText(originalProperties.getContentEncoding())
+									? this.encodingDelimiter + originalProperties.getContentEncoding()
+									: ""))
 							.build();
 
 			return new Message(compressed, messageProperties);

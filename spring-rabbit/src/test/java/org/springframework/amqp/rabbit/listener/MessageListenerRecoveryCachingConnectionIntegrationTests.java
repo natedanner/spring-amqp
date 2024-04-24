@@ -88,7 +88,7 @@ public class MessageListenerRecoveryCachingConnectionIntegrationTests {
 
 	private final int messageCount = 10;
 
-	private boolean transactional = false;
+	private boolean transactional;
 
 	private AcknowledgeMode acknowledgeMode = AcknowledgeMode.AUTO;
 
@@ -434,7 +434,7 @@ public class MessageListenerRecoveryCachingConnectionIntegrationTests {
 	}
 
 	private int getTimeout() {
-		return Math.min(1 + messageCount / (concurrentConsumers), 30);
+		return Math.min(1 + messageCount / concurrentConsumers, 30);
 	}
 
 	private SimpleMessageListenerContainer createContainer(String queueName, Object listener,

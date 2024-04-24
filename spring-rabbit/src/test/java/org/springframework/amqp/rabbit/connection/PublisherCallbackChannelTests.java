@@ -114,7 +114,7 @@ public class PublisherCallbackChannelTests {
 		CountDownLatch closedLatch = new CountDownLatch(2);
 		CountDownLatch waitForOtherLatch = new CountDownLatch(1);
 		SimpleAsyncTaskExecutor exec = new SimpleAsyncTaskExecutor();
-		IntStream.range(0, 2).forEach(i -> {
+		IntStream.range(0, 2).forEach(i ->
 			// this will open 3 or 4 channels
 			exec.execute(() -> {
 				template.execute(chann -> {
@@ -137,8 +137,7 @@ public class PublisherCallbackChannelTests {
 					return null;
 				});
 				closedLatch.countDown();
-			});
-		});
+			}));
 		assertThat(openedLatch.await(10, TimeUnit.SECONDS)).isTrue();
 		Connection conn = cf.createConnection();
 		Channel chan1 = conn.createChannel(false);

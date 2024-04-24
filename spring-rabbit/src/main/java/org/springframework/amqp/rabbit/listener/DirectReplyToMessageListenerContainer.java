@@ -136,7 +136,7 @@ public class DirectReplyToMessageListenerContainer extends DirectMessageListener
 				logger.debug("Reducing idle consumes by " + reduce);
 			}
 			super.setConsumersPerQueue(
-					this.consumerCount.updateAndGet((current) -> (int) Math.max(0, current - reduce)));
+					this.consumerCount.updateAndGet(current -> (int) Math.max(0, current - reduce)));
 		}
 	}
 

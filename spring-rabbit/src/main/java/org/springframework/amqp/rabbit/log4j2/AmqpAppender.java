@@ -410,7 +410,7 @@ public class AmqpAppender extends AbstractAppender {
 		/**
 		 * Configuration arbitrary application ID.
 		 */
-		private String applicationId = null;
+		private String applicationId;
 
 		/**
 		 * How many senders to use at once. Use more senders if you have lots of log output going through this appender.
@@ -523,12 +523,12 @@ public class AmqpAppender extends AbstractAppender {
 		/**
 		 * Default content-encoding of log messages.
 		 */
-		private String contentEncoding = null;
+		private String contentEncoding;
 
 		/**
 		 * Whether or not to try and declare the configured exchange when this appender starts.
 		 */
-		private boolean declareExchange = false;
+		private boolean declareExchange;
 
 		/**
 		 * A name for the connection (appears on the RabbitMQ Admin UI).
@@ -557,17 +557,17 @@ public class AmqpAppender extends AbstractAppender {
 
 		private MessageDeliveryMode deliveryMode = MessageDeliveryMode.PERSISTENT;
 
-		private boolean autoDelete = false;
+		private boolean autoDelete;
 
 		/**
 		 * Used to determine whether {@link MessageProperties#setMessageId(String)} is set.
 		 */
-		private boolean generateId = false;
+		private boolean generateId;
 
 		/**
 		 * The pool of senders.
 		 */
-		private ExecutorService senderPool = null;
+		private ExecutorService senderPool;
 
 		/**
 		 * Retries are delayed like: N ^ log(N), where N is the retry number.

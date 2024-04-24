@@ -54,7 +54,7 @@ import org.springframework.retry.support.RetryTemplate;
  */
 public class StatefulRetryOperationsInterceptorFactoryBean extends AbstractRetryOperationsInterceptorFactoryBean {
 
-	private static Log logger = LogFactory.getLog(StatefulRetryOperationsInterceptorFactoryBean.class);
+	private static final Log logger = LogFactory.getLog(StatefulRetryOperationsInterceptorFactoryBean.class);
 
 	private MessageKeyGenerator messageKeyGenerator;
 

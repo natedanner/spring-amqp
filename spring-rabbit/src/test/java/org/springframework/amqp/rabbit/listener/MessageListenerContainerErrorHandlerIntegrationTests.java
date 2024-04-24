@@ -28,6 +28,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -81,7 +82,7 @@ public class MessageListenerContainerErrorHandlerIntegrationTests {
 
 	private static Log LOGGER = LogFactory.getLog(MessageListenerContainerErrorHandlerIntegrationTests.class);
 
-	private static Queue QUEUE = new Queue(QUEUE_NAME);
+	private static Queue queue = new Queue(QUEUE_NAME);
 
 	// Mock error handler
 	private final ErrorHandler errorHandler = mock(ErrorHandler.class);
@@ -100,7 +101,7 @@ public class MessageListenerContainerErrorHandlerIntegrationTests {
 	public void testErrorHandlerThrowsARADRE() throws Exception {
 		RabbitTemplate template = this.createTemplate(1);
 		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(template.getConnectionFactory());
-		container.setQueues(QUEUE);
+		container.setQueues(queue);
 		container.setReceiveTimeout(10);
 		final CountDownLatch messageReceived = new CountDownLatch(1);
 		final CountDownLatch spiedQLogger = new CountDownLatch(1);
@@ -124,7 +125,7 @@ public class MessageListenerContainerErrorHandlerIntegrationTests {
 		Log logger = spy(TestUtils.getPropertyValue(container, "logger", Log.class));
 		willReturn(true).given(logger).isWarnEnabled();
 		new DirectFieldAccessor(container).setPropertyValue("logger", logger);
-		template.convertAndSend(QUEUE.getName(), "baz");
+		template.convertAndSend(queue.getName(), "baz");
 		assertThat(messageReceived.await(10, TimeUnit.SECONDS)).isTrue();
 		Object consumer = TestUtils.getPropertyValue(container, "consumers", Set.class)
 				.iterator().next();
@@ -251,11 +252,11 @@ public class MessageListenerContainerErrorHandlerIntegrationTests {
 
 		// can't use timed receive, queue will be deleted
 		Message rejected = await("Message did not arrive in DLQ")
-				.until(() -> template.receive(dlq.getName()), msg -> msg != null);
+				.until(() -> template.receive(dlq.getName()), Objects::nonNull);
 		assertThat(new String(rejected.getBody())).isEqualTo("foo");
 
 		// Verify that the exception strategy has access to the message
-		final AtomicReference<Message> failed = new AtomicReference<Message>();
+		final AtomicReference<Message> failed = new AtomicReference<>();
 		ConditionalRejectingErrorHandler eh = new ConditionalRejectingErrorHandler(t -> {
 			if (t instanceof ListenerExecutionFailedException) {
 				failed.set(((ListenerExecutionFailedException) t).getFailedMessage());
@@ -268,7 +269,7 @@ public class MessageListenerContainerErrorHandlerIntegrationTests {
 		template.send("", testQueueName, message);
 
 		rejected = await("Message did not arrive in DLQ")
-				.until(() -> template.receive(dlq.getName()), msg -> msg != null);
+				.until(() -> template.receive(dlq.getName()), Objects::nonNull);
 		assertThat(new String(rejected.getBody())).isEqualTo("foo");
 		assertThat(failed.get()).isNotNull();
 
@@ -297,7 +298,7 @@ public class MessageListenerContainerErrorHandlerIntegrationTests {
 
 		// Send messages to the queue
 		for (int i = 0; i < messageCount; i++) {
-			template.convertAndSend(QUEUE.getName(), i + "foo");
+			template.convertAndSend(queue.getName(), i + "foo");
 		}
 
 		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(template.getConnectionFactory());
@@ -308,7 +309,7 @@ public class MessageListenerContainerErrorHandlerIntegrationTests {
 
 		container.setPrefetchCount(messageCount);
 		container.setBatchSize(messageCount);
-		container.setQueueNames(QUEUE.getName());
+		container.setQueueNames(queue.getName());
 		container.setErrorHandler(eh);
 		container.setReceiveTimeout(50);
 		container.afterPropertiesSet();
@@ -321,7 +322,7 @@ public class MessageListenerContainerErrorHandlerIntegrationTests {
 			}
 
 			assertThat(this.errorsHandled.await(10, TimeUnit.SECONDS)).as("Not enough error handling, remaining:" + this.errorsHandled.getCount()).isTrue();
-			assertThat(template.receiveAndConvert(QUEUE.getName())).isNull();
+			assertThat(template.receiveAndConvert(queue.getName())).isNull();
 		}
 		finally {
 			container.shutdown();

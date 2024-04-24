@@ -152,8 +152,7 @@ public class SingleConnectionFactory extends AbstractConnectionFactory {
 	 * @return the new Connection
 	 */
 	protected Connection doCreateConnection() {
-		Connection connection = createBareConnection();
-		return connection;
+		return createBareConnection();
 	}
 
 	@Override
@@ -233,7 +232,7 @@ public class SingleConnectionFactory extends AbstractConnectionFactory {
 
 		@Override
 		public int hashCode() {
-			return 31 + ((target == null) ? 0 : target.hashCode());
+			return 31 + (target == null ? 0 : target.hashCode());
 		}
 
 		@Override

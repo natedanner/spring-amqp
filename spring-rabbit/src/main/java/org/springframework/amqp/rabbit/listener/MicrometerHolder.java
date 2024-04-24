@@ -95,7 +95,7 @@ public final class MicrometerHolder {
 				.tag("result", result)
 				.tag("exception", exception);
 		if (this.tags != null && !this.tags.isEmpty()) {
-			this.tags.forEach((key, value) -> builder.tag(key, value));
+			this.tags.forEach(builder::tag);
 		}
 		Timer registeredTimer = builder.register(this.registry);
 		this.timers.put(queue + exception, registeredTimer);

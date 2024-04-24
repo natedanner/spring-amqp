@@ -147,7 +147,7 @@ public class MessageListenerAdapterTests {
 
 	@Test
 	public void testMappedListenerMethod() throws Exception {
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new HashMap<>();
 		map.put("foo", "handle");
 		map.put("bar", "notDefinedOnInterface");
 		this.adapter.setDefaultListenerMethod("anotherHandle");

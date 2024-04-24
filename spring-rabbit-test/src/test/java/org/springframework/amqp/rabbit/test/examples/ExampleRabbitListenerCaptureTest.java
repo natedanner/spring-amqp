@@ -175,7 +175,7 @@ public class ExampleRabbitListenerCaptureTest {
 		@RabbitListener(id = "bar", queues = "#{queue2.name}")
 		@RabbitListener(id = "bar2", queues = "#{queue3.name}")
 		public void foo(@Payload String foo, @Header("amqp_receivedRoutingKey") String rk) {
-			if (!failed && foo.equals("ex")) {
+			if (!failed && "ex".equals(foo)) {
 				failed = true;
 				throw new RuntimeException(foo);
 			}

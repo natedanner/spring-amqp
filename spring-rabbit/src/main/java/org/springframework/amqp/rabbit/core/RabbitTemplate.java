@@ -223,7 +223,7 @@ public class RabbitTemplate extends RabbitAccessor // NOSONAR type line count
 	// The default queue name that will be used for synchronous receives.
 	private String defaultReceiveQueue;
 
-	private long receiveTimeout = 0;
+	private long receiveTimeout;
 
 	private long replyTimeout = DEFAULT_REPLY_TIMEOUT;
 
@@ -242,7 +242,7 @@ public class RabbitTemplate extends RabbitAccessor // NOSONAR type line count
 
 	private Expression mandatoryExpression = new ValueExpression<>(false);
 
-	private String correlationKey = null;
+	private String correlationKey;
 
 	private RetryTemplate retryTemplate;
 
@@ -350,7 +350,7 @@ public class RabbitTemplate extends RabbitAccessor // NOSONAR type line count
 	 * @param exchange the exchange name to use for send operations
 	 */
 	public void setExchange(@Nullable String exchange) {
-		this.exchange = (exchange != null) ? exchange : DEFAULT_EXCHANGE;
+		this.exchange = exchange != null ? exchange : DEFAULT_EXCHANGE;
 	}
 
 	/**
@@ -601,7 +601,7 @@ public class RabbitTemplate extends RabbitAccessor // NOSONAR type line count
 	 */
 	public void setCorrelationKey(String correlationKey) {
 		Assert.hasText(correlationKey, "'correlationKey' must not be null or empty");
-		if (!correlationKey.trim().equals("correlationId")) {
+		if (!"correlationId".equals(correlationKey.trim())) {
 			this.correlationKey = correlationKey.trim();
 		}
 	}
@@ -936,7 +936,7 @@ public class RabbitTemplate extends RabbitAccessor // NOSONAR type line count
 				unconfirmed.add(confirm.getCorrelationData());
 			}
 		}
-		return !unconfirmed.isEmpty() ? unconfirmed : null;
+		return unconfirmed.isEmpty() ? null : unconfirmed;
 	}
 
 	/**
@@ -1547,7 +1547,7 @@ public class RabbitTemplate extends RabbitAccessor // NOSONAR type line count
 			throws IOException {
 
 		Object receive = receiveMessage;
-		if (!(ReceiveAndReplyMessageCallback.class.isAssignableFrom(callback.getClass()))) {
+		if (!ReceiveAndReplyMessageCallback.class.isAssignableFrom(callback.getClass())) {
 			receive = getRequiredMessageConverter().fromMessage(receiveMessage);
 		}
 
@@ -1557,7 +1557,7 @@ public class RabbitTemplate extends RabbitAccessor // NOSONAR type line count
 		}
 		catch (ClassCastException e) {
 			StackTraceElement[] trace = e.getStackTrace();
-			if (trace[0].getMethodName().equals("handle")
+			if ("handle".equals(trace[0].getMethodName())
 					&& Objects.equals(trace[1].getFileName(), "RabbitTemplate.java")) {
 
 				throw new IllegalArgumentException("ReceiveAndReplyCallback '" + callback
@@ -2680,7 +2680,7 @@ public class RabbitTemplate extends RabbitAccessor // NOSONAR type line count
 				String messageTag = messageTagHeader.toString();
 				final PendingReply pendingReply = this.replyHolder.get(messageTag);
 				if (pendingReply != null) {
-					callback = (returnedMsg) ->
+					callback = returnedMsg ->
 							pendingReply.returned(new AmqpMessageReturnedException("Message returned", returnedMsg));
 				}
 				else if (logger.isWarnEnabled()) {

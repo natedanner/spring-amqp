@@ -155,9 +155,8 @@ public class RabbitListenerTests extends AbstractTestContainerTests {
 	}
 
 	private URI queueUri(String queue) throws URISyntaxException {
-		URI uri = new URI("http://localhost:" + managementPort() + "/api")
+		return new URI("http://localhost:" + managementPort() + "/api")
 				.resolve("/api/queues/" + UriUtils.encodePathSegment("/", StandardCharsets.UTF_8) + "/" + queue);
-		return uri;
 	}
 
 	private WebClient createClient(String adminUser, String adminPassword) {
@@ -278,11 +277,10 @@ public class RabbitListenerTests extends AbstractTestContainerTests {
 		RabbitListenerContainerFactory<StreamListenerContainer> observableFactory(Environment env) {
 			StreamRabbitListenerContainerFactory factory = new StreamRabbitListenerContainerFactory(env);
 			factory.setObservationEnabled(true);
-			factory.setConsumerCustomizer((id, builder) -> {
+			factory.setConsumerCustomizer((id, builder) ->
 				builder.name(id)
 						.offset(OffsetSpecification.first())
-						.manualTrackingStrategy();
-			});
+						.manualTrackingStrategy());
 			return factory;
 		}
 
@@ -303,9 +301,8 @@ public class RabbitListenerTests extends AbstractTestContainerTests {
 		@Bean
 		public StreamRetryOperationsInterceptorFactoryBean sfb() {
 			StreamRetryOperationsInterceptorFactoryBean rfb = new StreamRetryOperationsInterceptorFactoryBean();
-			rfb.setStreamMessageRecoverer((msg, context, throwable) -> {
-				this.latch4.countDown();
-			});
+			rfb.setStreamMessageRecoverer((msg, context, throwable) ->
+				this.latch4.countDown());
 			return rfb;
 		}
 
@@ -320,7 +317,7 @@ public class RabbitListenerTests extends AbstractTestContainerTests {
 				builder.name(id)
 						.offset(OffsetSpecification.first())
 						.manualTrackingStrategy();
-				if (id.equals("testNative")) {
+				if ("testNative".equals(id)) {
 					this.id = id;
 				}
 			});
@@ -335,11 +332,10 @@ public class RabbitListenerTests extends AbstractTestContainerTests {
 			StreamRabbitListenerContainerFactory factory = new StreamRabbitListenerContainerFactory(env);
 			factory.setNativeListener(true);
 			factory.setObservationEnabled(true);
-			factory.setConsumerCustomizer((id, builder) -> {
+			factory.setConsumerCustomizer((id, builder) ->
 				builder.name(id)
 						.offset(OffsetSpecification.first())
-						.manualTrackingStrategy();
-			});
+						.manualTrackingStrategy());
 			return factory;
 		}
 

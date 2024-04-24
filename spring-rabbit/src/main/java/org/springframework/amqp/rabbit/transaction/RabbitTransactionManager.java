@@ -132,7 +132,7 @@ public class RabbitTransactionManager extends AbstractPlatformTransactionManager
 	@Override
 	protected boolean isExistingTransaction(Object transaction) {
 		RabbitTransactionObject txObject = (RabbitTransactionObject) transaction;
-		return (txObject.getResourceHolder() != null);
+		return txObject.getResourceHolder() != null;
 	}
 
 	@Override

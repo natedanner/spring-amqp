@@ -208,7 +208,7 @@ public class EnableRabbitReturnTypesTests {
 
 	}
 
-	public static abstract class Two implements One {
+	public abstract static class Two implements One {
 
 		private String field;
 

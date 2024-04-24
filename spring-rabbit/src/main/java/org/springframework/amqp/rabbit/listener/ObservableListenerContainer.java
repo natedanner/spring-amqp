@@ -46,7 +46,7 @@ public abstract class ObservableListenerContainer extends RabbitAccessor
 
 	private boolean micrometerEnabled = true;
 
-	private boolean observationEnabled = false;
+	private boolean observationEnabled;
 
 	private String beanName = "not.a.Spring.bean";
 

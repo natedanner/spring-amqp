@@ -22,6 +22,7 @@ import static org.awaitility.Awaitility.await;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -84,7 +85,7 @@ public class FixedReplyQueueDeadLetterTests extends NeedsManagementTests {
 
 	@Test
 	void testQueueArgs1() throws MalformedURLException, URISyntaxException, InterruptedException {
-		Map<String, Object> queue = await().until(() -> queueInfo("all.args.1"), que -> que != null);
+		Map<String, Object> queue = await().until(() -> queueInfo("all.args.1"), Objects::nonNull);
 		Map<String, Object> arguments = arguments(queue);
 		assertThat(arguments.get("x-message-ttl")).isEqualTo(1000);
 		assertThat(arguments.get("x-expires")).isEqualTo(200_000);
@@ -101,7 +102,7 @@ public class FixedReplyQueueDeadLetterTests extends NeedsManagementTests {
 
 	@Test
 	void testQueueArgs2() throws MalformedURLException, URISyntaxException, InterruptedException {
-		Map<String, Object> queue = await().until(() -> queueInfo("all.args.2"), que -> que != null);
+		Map<String, Object> queue = await().until(() -> queueInfo("all.args.2"), Objects::nonNull);
 		Map<String, Object> arguments = arguments(queue);
 		assertThat(arguments.get("x-message-ttl")).isEqualTo(1000);
 		assertThat(arguments.get("x-expires")).isEqualTo(200_000);
@@ -117,7 +118,7 @@ public class FixedReplyQueueDeadLetterTests extends NeedsManagementTests {
 
 	@Test
 	void testQueueArgs3() throws URISyntaxException {
-		Map<String, Object> queue = await().until(() -> queueInfo("all.args.3"), que -> que != null);
+		Map<String, Object> queue = await().until(() -> queueInfo("all.args.3"), Objects::nonNull);
 		Map<String, Object> arguments = arguments(queue);
 		assertThat(arguments.get("x-message-ttl")).isEqualTo(1000);
 		assertThat(arguments.get("x-expires")).isEqualTo(200_000);
@@ -139,7 +140,7 @@ public class FixedReplyQueueDeadLetterTests extends NeedsManagementTests {
 	 */
 	@Test
 	void testQuorumArgs() {
-		Map<String, Object> queue = await().until(() -> queueInfo("test.quorum"), que -> que != null);
+		Map<String, Object> queue = await().until(() -> queueInfo("test.quorum"), Objects::nonNull);
 		Map<String, Object> arguments = arguments(queue);
 		assertThat(arguments.get("x-queue-type")).isEqualTo("quorum");
 		assertThat(arguments.get("x-delivery-limit")).isEqualTo(10);

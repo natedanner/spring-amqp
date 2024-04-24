@@ -118,7 +118,7 @@ public class RabbitListenerContainerFactoryIntegrationTests {
 
 	static class RabbitEndpointSampleBean {
 
-		private final Map<String, Boolean> invocations = new HashMap<String, Boolean>();
+		private final Map<String, Boolean> invocations = new HashMap<>();
 
 		public void expectFooBarUpperCase(@Payload String msg) {
 			invocations.put("expectFooBarUpperCase", true);

@@ -260,11 +260,11 @@ public class MessageProperties implements Serializable {
 	}
 
 	public void setReplyToAddress(Address replyTo) {
-		this.replyTo = (replyTo != null) ? replyTo.toString() : null;
+		this.replyTo = replyTo != null ? replyTo.toString() : null;
 	}
 
 	public Address getReplyToAddress() {
-		return (this.replyTo != null) ? new Address(this.replyTo) : null;
+		return this.replyTo != null ? new Address(this.replyTo) : null;
 	}
 
 	public void setContentType(String contentType) {
@@ -658,26 +658,26 @@ public class MessageProperties implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.appId == null) ? 0 : this.appId.hashCode());
-		result = prime * result + ((this.clusterId == null) ? 0 : this.clusterId.hashCode());
-		result = prime * result + ((this.contentEncoding == null) ? 0 : this.contentEncoding.hashCode());
+		result = prime * result + (this.appId == null ? 0 : this.appId.hashCode());
+		result = prime * result + (this.clusterId == null ? 0 : this.clusterId.hashCode());
+		result = prime * result + (this.contentEncoding == null ? 0 : this.contentEncoding.hashCode());
 		result = prime * result + (int) (this.contentLength ^ (this.contentLength >>> INT_MASK));
-		result = prime * result + ((this.contentType == null) ? 0 : this.contentType.hashCode());
-		result = prime * result + ((this.correlationId == null) ? 0 : this.correlationId.hashCode());
-		result = prime * result + ((this.deliveryMode == null) ? 0 : this.deliveryMode.hashCode());
+		result = prime * result + (this.contentType == null ? 0 : this.contentType.hashCode());
+		result = prime * result + (this.correlationId == null ? 0 : this.correlationId.hashCode());
+		result = prime * result + (this.deliveryMode == null ? 0 : this.deliveryMode.hashCode());
 		result = prime * result + (int) (this.deliveryTag ^ (this.deliveryTag >>> INT_MASK));
-		result = prime * result + ((this.expiration == null) ? 0 : this.expiration.hashCode());
+		result = prime * result + (this.expiration == null ? 0 : this.expiration.hashCode());
 		result = prime * result + this.headers.hashCode();
-		result = prime * result + ((this.messageCount == null) ? 0 : this.messageCount.hashCode());
-		result = prime * result + ((this.messageId == null) ? 0 : this.messageId.hashCode());
-		result = prime * result + ((this.priority == null) ? 0 : this.priority.hashCode());
-		result = prime * result + ((this.receivedExchange == null) ? 0 : this.receivedExchange.hashCode());
-		result = prime * result + ((this.receivedRoutingKey == null) ? 0 : this.receivedRoutingKey.hashCode());
-		result = prime * result + ((this.redelivered == null) ? 0 : this.redelivered.hashCode());
-		result = prime * result + ((this.replyTo == null) ? 0 : this.replyTo.hashCode());
-		result = prime * result + ((this.timestamp == null) ? 0 : this.timestamp.hashCode());
-		result = prime * result + ((this.type == null) ? 0 : this.type.hashCode());
-		result = prime * result + ((this.userId == null) ? 0 : this.userId.hashCode());
+		result = prime * result + (this.messageCount == null ? 0 : this.messageCount.hashCode());
+		result = prime * result + (this.messageId == null ? 0 : this.messageId.hashCode());
+		result = prime * result + (this.priority == null ? 0 : this.priority.hashCode());
+		result = prime * result + (this.receivedExchange == null ? 0 : this.receivedExchange.hashCode());
+		result = prime * result + (this.receivedRoutingKey == null ? 0 : this.receivedRoutingKey.hashCode());
+		result = prime * result + (this.redelivered == null ? 0 : this.redelivered.hashCode());
+		result = prime * result + (this.replyTo == null ? 0 : this.replyTo.hashCode());
+		result = prime * result + (this.timestamp == null ? 0 : this.timestamp.hashCode());
+		result = prime * result + (this.type == null ? 0 : this.type.hashCode());
+		result = prime * result + (this.userId == null ? 0 : this.userId.hashCode());
 		return result;
 	}
 

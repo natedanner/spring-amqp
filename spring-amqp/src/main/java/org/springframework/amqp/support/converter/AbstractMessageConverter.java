@@ -32,7 +32,7 @@ import org.springframework.lang.Nullable;
  */
 public abstract class AbstractMessageConverter implements MessageConverter {
 
-	private boolean createMessageIds = false;
+	private boolean createMessageIds;
 
 	/**
 	 * Flag to indicate that new messages should have unique identifiers added to their properties before sending.

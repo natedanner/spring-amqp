@@ -59,7 +59,7 @@ public class AnswerTests {
 		}
 
 		public String foo(String foo) {
-			if (foo.equals("fail")) {
+			if ("fail".equals(foo)) {
 				throw new IllegalArgumentException("fail");
 			}
 			return foo.toUpperCase();

@@ -36,7 +36,7 @@ public abstract class AbstractBuilder {
 	 */
 	protected Map<String, Object> getOrCreateArguments() {
 		if (this.arguments == null) {
-			this.arguments = new LinkedHashMap<String, Object>();
+			this.arguments = new LinkedHashMap<>();
 		}
 		return this.arguments;
 	}
